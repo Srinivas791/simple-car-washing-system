@@ -1,0 +1,3024 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HydroShine™ Auto Spa | Next-Gen Car Washing & Detailing System</title>
+  
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif']
+          },
+          colors: {
+            brand: {
+              50: '#ecfeff',
+              100: '#cffafe',
+              400: '#22d3ee',
+              500: '#06b6d4',
+              600: '#0891b2',
+              900: '#164e63',
+              950: '#083344'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Canvas Confetti & Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Custom CSS -->
+  <style>
+    @layer utilities {
+      .bg-glass {
+        background: rgba(15, 23, 42, 0.75);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+      }
+    }
+    html {
+      scroll-behavior: smooth;
+      color-scheme: dark;
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090d16;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+    .glow-cyan {
+      box-shadow: 0 0 40px -10px rgba(6, 182, 212, 0.3);
+    }
+    .glow-amber {
+      box-shadow: 0 0 35px -10px rgba(245, 158, 11, 0.25);
+    }
+    @keyframes pulseSubtle {
+      0%, 100% { opacity: 0.15; transform: scale(1); }
+      50% { opacity: 0.25; transform: scale(1.08); }
+    }
+    .animate-blob {
+      animation: pulseSubtle 8s infinite ease-in-out;
+    }
+    ::selection {
+      background-color: #06b6d4;
+      color: #020617;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans selection:bg-cyan-500 selection:text-slate-950 antialiased overflow-x-hidden">
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed top-5 right-5 z-[9999] flex flex-col gap-2.5 max-w-sm pointer-events-none"></div>
+
+  <!-- Main Sticky Navigation Bar -->
+  <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/80 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Brand Logo -->
+        <a href="#" class="flex items-center gap-3 group">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-cyan-600 via-cyan-400 to-teal-300 p-0.5 shadow-lg shadow-cyan-500/25 group-hover:scale-105 transition-transform duration-300">
+            <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center text-cyan-400">
+              <i class="fa-solid fa-droplet text-xl group-hover:rotate-12 transition-transform duration-300"></i>
+            </div>
+          </div>
+          <div>
+            <span class="font-display font-black text-xl tracking-tight text-white flex items-center gap-1.5">
+              HYDRO<span class="text-cyan-400">SHINE</span>
+              <span class="text-[9px] uppercase tracking-widest px-1.5 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-bold">SPA</span>
+            </span>
+            <span class="text-[10px] text-slate-400 tracking-wider uppercase block font-medium">Smart Car Wash System</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-7 text-xs font-semibold text-slate-300">
+          <a href="#packages" class="hover:text-cyan-400 transition-colors">Services & Pricing</a>
+          <a href="#booking" class="hover:text-cyan-400 transition-colors">Book Wash</a>
+          <a href="#tracker" class="hover:text-cyan-400 transition-colors flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Live Status Tracker
+          </a>
+          <a href="#eco-tech" class="hover:text-cyan-400 transition-colors">Eco-Tech</a>
+          <a href="#reviews" class="hover:text-cyan-400 transition-colors">Testimonials</a>
+          <a href="#contact" class="hover:text-cyan-400 transition-colors">Location</a>
+        </nav>
+
+        <!-- Right Action Items -->
+        <div class="flex items-center gap-3">
+          <!-- Toggle Staff / Admin Portal -->
+          <button type="button" class="toggle-admin-btn hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-900 border border-slate-700/80 hover:border-cyan-500 text-slate-300 hover:text-cyan-300 transition-all duration-200">
+            <i class="fa-solid fa-gauge-high text-cyan-400"></i>
+            <span>Staff Portal</span>
+          </button>
+
+          <!-- Book Now Button -->
+          <a href="#booking" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-cyan-500 to-teal-400 hover:from-cyan-400 hover:to-teal-300 text-slate-950 shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:shadow-cyan-400/40 hover:-translate-y-0.5">
+            Book Appointment
+          </a>
+
+          <!-- Mobile Menu Hamburger -->
+          <button id="mobile-menu-btn" class="md:hidden p-2 rounded-xl bg-slate-900 text-slate-300 border border-slate-800 focus:outline-none">
+            <i class="fa-solid fa-bars-staggered text-lg"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800 bg-slate-950/95 px-6 py-4 space-y-3 text-sm font-semibold">
+      <a href="#packages" class="block py-2 text-slate-300 hover:text-cyan-400">Services & Pricing</a>
+      <a href="#booking" class="block py-2 text-slate-300 hover:text-cyan-400">Book Wash Wizard</a>
+      <a href="#tracker" class="block py-2 text-slate-300 hover:text-cyan-400">Live Status Tracker</a>
+      <a href="#eco-tech" class="block py-2 text-slate-300 hover:text-cyan-400">Eco-Tech Water System</a>
+      <a href="#reviews" class="block py-2 text-slate-300 hover:text-cyan-400">Customer Reviews</a>
+      <a href="#contact" class="block py-2 text-slate-300 hover:text-cyan-400">Hours & Contact</a>
+      <button class="toggle-admin-btn w-full mt-2 py-2.5 px-4 rounded-xl text-xs font-semibold bg-slate-900 border border-slate-700 text-cyan-400 flex items-center justify-center gap-2">
+        <i class="fa-solid fa-gauge-high"></i>
+        <span>Open Staff / Operator Portal</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- 1. CUSTOMER PORTAL VIEW                    -->
+  <!-- ========================================== -->
+  <main id="view-customer" class="relative">
+
+    <!-- HERO SECTION -->
+    <section class="relative pt-12 pb-24 overflow-hidden">
+      <!-- Glow Gradients -->
+      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[350px] bg-cyan-500/15 rounded-full blur-[120px] pointer-events-none animate-blob"></div>
+      <div class="absolute top-1/3 left-10 w-72 h-72 bg-teal-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+          
+          <!-- Top Badge -->
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-950/80 border border-cyan-500/30 text-cyan-300 text-xs font-semibold mb-6 shadow-inner">
+            <span class="flex h-2 w-2 rounded-full bg-cyan-400 animate-ping"></span>
+            <span>Next-Generation Touchless & Ceramic Auto Care</span>
+          </div>
+
+          <!-- Main Headline -->
+          <h1 class="font-display font-black text-4xl sm:text-6xl text-white tracking-tight leading-[1.1] mb-6">
+            Precision Car Wash with 
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-sky-400">
+              Live Bay Tracking
+            </span>
+          </h1>
+
+          <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto mb-8 font-normal">
+            Experience reverse-osmosis spot-free washes, hand-applied ceramic protection, and live progress monitoring right on your phone while you relax.
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="#booking" class="w-full sm:w-auto px-8 py-4 rounded-2xl font-display font-bold text-sm bg-gradient-to-r from-cyan-500 to-teal-400 hover:from-cyan-400 hover:to-teal-300 text-slate-950 shadow-xl shadow-cyan-500/30 hover:shadow-cyan-400/50 transition-all duration-300 hover:-translate-y-0.5 flex items-center justify-center gap-2">
+              <i class="fa-solid fa-calendar-check"></i>
+              <span>Book Your Wash Slot</span>
+            </a>
+            <a href="#tracker" class="w-full sm:w-auto px-8 py-4 rounded-2xl font-display font-bold text-sm bg-slate-900/90 hover:bg-slate-800 text-white border border-slate-700/80 hover:border-cyan-500/50 transition-all duration-300 flex items-center justify-center gap-2">
+              <i class="fa-solid fa-satellite-dish text-cyan-400"></i>
+              <span>Track Car Status Live</span>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Hero Feature Image Showcase & Interactive Counters -->
+        <div class="relative max-w-5xl mx-auto">
+          <div class="rounded-3xl border border-slate-800 bg-slate-900/40 p-3 sm:p-4 backdrop-blur-xl shadow-2xl overflow-hidden relative group">
+            <img src="https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=1600&auto=format&fit=crop&q=80" 
+                 alt="Luxury Car Detailing and Wash" 
+                 class="w-full h-72 sm:h-96 object-cover rounded-2xl brightness-90 group-hover:scale-[1.01] transition-transform duration-700">
+            
+            <!-- Floating overlay card 1: Live Status Demo -->
+            <div class="absolute bottom-6 left-6 right-6 sm:right-auto sm:max-w-xs bg-slate-950/85 backdrop-blur-md border border-slate-700/60 p-4 rounded-2xl shadow-xl">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span> Bay 2 Active
+                </span>
+                <span class="text-xs font-mono text-slate-400">HS-7841</span>
+              </div>
+              <p class="text-xs font-bold text-white truncate">Porsche Cayenne Turbo</p>
+              <div class="w-full bg-slate-800 rounded-full h-1.5 mt-2 overflow-hidden">
+                <div class="bg-gradient-to-r from-cyan-400 to-teal-400 h-full w-3/4 rounded-full"></div>
+              </div>
+              <span class="text-[10px] text-slate-400 mt-1 block">Interior Detailing • 75% complete</span>
+            </div>
+          </div>
+
+          <!-- Quick Metrics Bar -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+            <div class="p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 text-center">
+              <span class="font-display font-black text-2xl sm:text-3xl text-cyan-400 block">45,000+</span>
+              <span class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Cars Washed</span>
+            </div>
+            <div class="p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 text-center">
+              <span class="font-display font-black text-2xl sm:text-3xl text-teal-400 block">4.9 / 5</span>
+              <span class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Verified Ratings</span>
+            </div>
+            <div class="p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 text-center">
+              <span class="font-display font-black text-2xl sm:text-3xl text-sky-400 block">85%</span>
+              <span class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Recycled Water</span>
+            </div>
+            <div class="p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 text-center">
+              <span class="font-display font-black text-2xl sm:text-3xl text-amber-400 block">20 min</span>
+              <span class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Avg. Express Wash</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: SERVICE PACKAGES & PRICING -->
+    <section id="packages" class="py-20 border-t border-slate-900 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-2xl mx-auto mb-16">
+          <span class="text-xs font-bold uppercase tracking-widest text-cyan-400 bg-cyan-950/60 border border-cyan-800/50 px-3 py-1 rounded-full">Transparent Pricing</span>
+          <h2 class="font-display font-black text-3xl sm:text-5xl text-white tracking-tight mt-3 mb-4">
+            Customized Wash Packages
+          </h2>
+          <p class="text-sm sm:text-base text-slate-400">
+            From rapid exterior snow foam baths to full showroom ceramic detailing. Every tier includes spot-free reverse osmosis water and scratchless microfibers.
+          </p>
+        </div>
+
+        <!-- 4 Package Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <!-- Express Wash -->
+          <div class="p-6 rounded-3xl bg-slate-900/60 border border-slate-800/80 hover:border-slate-700 transition flex flex-col justify-between group">
+            <div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-xs font-bold text-cyan-400 bg-cyan-950/80 px-2.5 py-1 rounded-md border border-cyan-800/40">Quick & Clean</span>
+                <span class="text-xs text-slate-400"><i class="fa-regular fa-clock"></i> ~20 min</span>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white">Express Foam Wash</h3>
+              <p class="text-xs text-slate-400 mt-1 mb-4">Quick exterior refresh for daily commuters</p>
+              
+              <div class="flex items-baseline gap-1 my-4">
+                <span class="text-3xl font-black text-white">$24.99</span>
+                <span class="text-xs text-slate-400">/ sedan</span>
+              </div>
+
+              <ul class="space-y-2.5 text-xs text-slate-300 border-t border-slate-800/80 pt-4">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Touchless high-pressure rinse</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> pH-balanced foam shampoo</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Wheel face degreasing</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Spot-free RO water rinse</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Warm blow dry buff</li>
+              </ul>
+            </div>
+
+            <a href="#booking" class="mt-8 w-full py-3 rounded-xl font-bold text-xs bg-slate-800 hover:bg-slate-700 text-white transition text-center block">
+              Book Express
+            </a>
+          </div>
+
+          <!-- Deluxe Wash (Featured) -->
+          <div class="p-6 rounded-3xl bg-gradient-to-b from-cyan-950/40 via-slate-900 to-slate-900 border-2 border-cyan-500 shadow-xl shadow-cyan-500/10 transition flex flex-col justify-between relative">
+            <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-cyan-500 text-slate-950 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
+              Most Popular
+            </div>
+            <div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-xs font-bold text-cyan-300 bg-cyan-950/80 px-2.5 py-1 rounded-md border border-cyan-700/50">Complete In & Out</span>
+                <span class="text-xs text-cyan-300"><i class="fa-regular fa-clock"></i> ~45 min</span>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white">Deluxe Interior & Exterior</h3>
+              <p class="text-xs text-slate-300 mt-1 mb-4">Complete cleanliness inside and out</p>
+              
+              <div class="flex items-baseline gap-1 my-4">
+                <span class="text-3xl font-black text-cyan-400">$49.99</span>
+                <span class="text-xs text-slate-400">/ sedan</span>
+              </div>
+
+              <ul class="space-y-2.5 text-xs text-slate-200 border-t border-cyan-900/40 pt-4">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> All Express Wash services</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Full interior & trunk vacuum</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Dashboard & console wipe down</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Crystal glass polish inside & out</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Tire dress & wet gloss shine</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Scented cabin air refresh</li>
+              </ul>
+            </div>
+
+            <a href="#booking" class="mt-8 w-full py-3 rounded-xl font-bold text-xs bg-cyan-500 hover:bg-cyan-400 text-slate-950 transition text-center shadow-lg shadow-cyan-500/20 block">
+              Book Deluxe
+            </a>
+          </div>
+
+          <!-- Ceramic Shield -->
+          <div class="p-6 rounded-3xl bg-slate-900/60 border border-slate-800/80 hover:border-slate-700 transition flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-xs font-bold text-amber-400 bg-amber-950/50 px-2.5 py-1 rounded-md border border-amber-800/40">Ultimate Gloss</span>
+                <span class="text-xs text-slate-400"><i class="fa-regular fa-clock"></i> ~70 min</span>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white">Ceramic Shield & Wax</h3>
+              <p class="text-xs text-slate-400 mt-1 mb-4">60-day hydrophobic UV water beading</p>
+              
+              <div class="flex items-baseline gap-1 my-4">
+                <span class="text-3xl font-black text-white">$89.99</span>
+                <span class="text-xs text-slate-400">/ sedan</span>
+              </div>
+
+              <ul class="space-y-2.5 text-xs text-slate-300 border-t border-slate-800/80 pt-4">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> All Deluxe Package features</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Hand-applied synthetic ceramic</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Inner barrel rim decontaminant</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Clean door jambs & hinges</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Pressure wash floor mats</li>
+              </ul>
+            </div>
+
+            <a href="#booking" class="mt-8 w-full py-3 rounded-xl font-bold text-xs bg-slate-800 hover:bg-slate-700 text-white transition text-center block">
+              Book Ceramic
+            </a>
+          </div>
+
+          <!-- Royal Detailing -->
+          <div class="p-6 rounded-3xl bg-slate-900/60 border border-slate-800/80 hover:border-slate-700 transition flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-xs font-bold text-purple-400 bg-purple-950/50 px-2.5 py-1 rounded-md border border-purple-800/40">Showroom Concierge</span>
+                <span class="text-xs text-slate-400"><i class="fa-regular fa-clock"></i> ~120 min</span>
+              </div>
+              <h3 class="font-display font-bold text-xl text-white">Royal Detailing</h3>
+              <p class="text-xs text-slate-400 mt-1 mb-4">Deep steam extraction and restoration</p>
+              
+              <div class="flex items-baseline gap-1 my-4">
+                <span class="text-3xl font-black text-white">$159.99</span>
+                <span class="text-xs text-slate-400">/ sedan</span>
+              </div>
+
+              <ul class="space-y-2.5 text-xs text-slate-300 border-t border-slate-800/80 pt-4">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> All Ceramic Shield features</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Full upholstery steam extraction</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Leather restoration conditioner</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Engine bay steam degrease</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Ozone cabin disinfection</li>
+              </ul>
+            </div>
+
+            <a href="#booking" class="mt-8 w-full py-3 rounded-xl font-bold text-xs bg-slate-800 hover:bg-slate-700 text-white transition text-center block">
+              Book Royal
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: INTERACTIVE BOOKING WIZARD -->
+    <section id="booking" class="py-20 bg-slate-900/30 border-t border-slate-800 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <span class="text-xs font-bold uppercase tracking-widest text-cyan-400 bg-cyan-950/60 border border-cyan-800/50 px-3 py-1 rounded-full">Simple 4-Step Booking</span>
+          <h2 class="font-display font-black text-3xl sm:text-5xl text-white tracking-tight mt-3 mb-3">
+            Schedule Your Wash
+          </h2>
+          <p class="text-sm text-slate-400">Choose vehicle size, package, customize with add-ons and pick your time slot.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- Left Column: The 4 Wizard Steps (Span 8) -->
+          <div class="lg:col-span-8 bg-slate-950/70 border border-slate-800/90 rounded-3xl p-6 sm:p-8 backdrop-blur-md shadow-2xl">
+            
+            <!-- Step Indicators -->
+            <div class="flex items-center justify-between mb-8 pb-6 border-b border-slate-800/80">
+              <div class="flex items-center gap-3">
+                <div id="step-indicator-1" class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm bg-cyan-500 text-slate-950">1</div>
+                <span class="text-xs font-semibold text-white hidden sm:block">Vehicle</span>
+              </div>
+              <div class="h-0.5 flex-1 mx-2 sm:mx-4 bg-slate-800"></div>
+
+              <div class="flex items-center gap-3">
+                <div id="step-indicator-2" class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm bg-slate-800 text-slate-400 border border-slate-700">2</div>
+                <span class="text-xs font-semibold text-slate-400 hidden sm:block">Package</span>
+              </div>
+              <div class="h-0.5 flex-1 mx-2 sm:mx-4 bg-slate-800"></div>
+
+              <div class="flex items-center gap-3">
+                <div id="step-indicator-3" class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm bg-slate-800 text-slate-400 border border-slate-700">3</div>
+                <span class="text-xs font-semibold text-slate-400 hidden sm:block">Schedule</span>
+              </div>
+              <div class="h-0.5 flex-1 mx-2 sm:mx-4 bg-slate-800"></div>
+
+              <div class="flex items-center gap-3">
+                <div id="step-indicator-4" class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm bg-slate-800 text-slate-400 border border-slate-700">4</div>
+                <span class="text-xs font-semibold text-slate-400 hidden sm:block">Confirm</span>
+              </div>
+            </div>
+
+            <!-- STEP 1: VEHICLE TYPE -->
+            <div id="wizard-step-1" class="space-y-6">
+              <div>
+                <h3 class="text-xl font-bold text-white mb-1">Select Vehicle Size</h3>
+                <p class="text-xs text-slate-400">Pricing adjusts automatically based on dimensions and wash area.</p>
+              </div>
+              <div id="vehicle-types-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
+            <!-- STEP 2: PACKAGES & ADDONS -->
+            <div id="wizard-step-2" class="space-y-8 hidden">
+              <div>
+                <h3 class="text-xl font-bold text-white mb-1">Choose Service Tier</h3>
+                <p class="text-xs text-slate-400">Prices reflect your chosen vehicle dimensions.</p>
+              </div>
+              <div id="packages-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Injected via JS -->
+              </div>
+
+              <!-- Add-ons Section -->
+              <div class="pt-6 border-t border-slate-800">
+                <div class="mb-4">
+                  <h4 class="text-lg font-bold text-white mb-1">Popular A-La-Carte Add-Ons</h4>
+                  <p class="text-xs text-slate-400">Upgrade your experience with specialized treatments.</p>
+                </div>
+                <div id="addons-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  <!-- Injected via JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- STEP 3: SCHEDULE DATE & TIME -->
+            <div id="wizard-step-3" class="space-y-6 hidden">
+              <div>
+                <h3 class="text-xl font-bold text-white mb-1">Pick Date & Time Slot</h3>
+                <p class="text-xs text-slate-400">Real-time bay capacity ensures zero waiting time upon arrival.</p>
+              </div>
+
+              <!-- Date Picker Input -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-2">Select Date</label>
+                <input type="date" id="booking-date-input" class="w-full sm:w-1/2 p-3.5 bg-slate-900 border border-slate-700 rounded-xl text-white text-sm focus:border-cyan-500 focus:outline-none">
+              </div>
+
+              <!-- Time Slots Grid -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-2">Available Time Windows</label>
+                <div id="time-slots-container" class="grid grid-cols-3 sm:grid-cols-4 gap-2.5">
+                  <!-- Injected via JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- STEP 4: CONTACT & DETAILS REVIEW -->
+            <div id="wizard-step-4" class="space-y-6 hidden">
+              <div>
+                <h3 class="text-xl font-bold text-white mb-1">Customer & Vehicle Info</h3>
+                <p class="text-xs text-slate-400">Used for booking status SMS/Email notifications and bay check-in.</p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                <div>
+                  <label class="block text-slate-300 font-semibold mb-1">Full Name *</label>
+                  <input type="text" id="input-name" placeholder="e.g. Marcus Vance" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-white text-xs focus:border-cyan-500 focus:outline-none">
+                </div>
+                <div>
+                  <label class="block text-slate-300 font-semibold mb-1">Phone Number (for SMS Tracking) *</label>
+                  <input type="tel" id="input-phone" placeholder="e.g. +1 (555) 234-8901" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-white text-xs focus:border-cyan-500 focus:outline-none">
+                </div>
+                <div>
+                  <label class="block text-slate-300 font-semibold mb-1">Email Address</label>
+                  <input type="email" id="input-email" placeholder="e.g. marcus@example.com" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-white text-xs focus:border-cyan-500 focus:outline-none">
+                </div>
+                <div>
+                  <label class="block text-slate-300 font-semibold mb-1">License Plate Number *</label>
+                  <input type="text" id="input-license-plate" placeholder="e.g. 7XYZ890" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-white text-xs uppercase font-mono tracking-wider focus:border-cyan-500 focus:outline-none">
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="block text-slate-300 font-semibold mb-1">Car Model & Paint Color</label>
+                  <input type="text" id="input-vehicle-model" placeholder="e.g. 2023 BMW M3 Sedan (Isle of Man Green)" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-white text-xs focus:border-cyan-500 focus:outline-none">
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="block text-slate-300 font-semibold mb-1">Special Instructions / Sensitive Areas</label>
+                  <textarea id="input-notes" rows="2" placeholder="e.g. Matte wrap on hood, do not use aggressive wheel acid..." class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-white text-xs focus:border-cyan-500 focus:outline-none"></textarea>
+                </div>
+              </div>
+
+              <!-- Review Summary Box -->
+              <div id="wizard-review-summary" class="mt-4">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
+            <!-- Wizard Navigation Buttons -->
+            <div class="flex items-center justify-between pt-6 border-t border-slate-800 mt-8">
+              <button type="button" id="wizard-prev-btn" class="px-5 py-2.5 rounded-xl text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 transition">
+                <i class="fa-solid fa-arrow-left mr-1"></i> Back
+              </button>
+              
+              <div class="flex items-center gap-3">
+                <button type="button" id="wizard-next-btn" class="px-7 py-3 rounded-xl text-xs font-bold bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-lg shadow-cyan-500/25 transition flex items-center gap-2">
+                  <span>Continue</span>
+                  <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button type="button" id="wizard-submit-btn" class="hidden px-7 py-3 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 shadow-xl shadow-emerald-500/25 transition flex items-center gap-2">
+                  <i class="fa-solid fa-check"></i>
+                  <span>Confirm & Reserve Booking</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Live Calculation Summary Panel (Span 4) -->
+          <div class="lg:col-span-4 sticky top-28 bg-slate-900/80 border border-slate-800 rounded-3xl p-6 backdrop-blur-xl shadow-xl">
+            <h4 class="font-display font-bold text-base text-white mb-4 flex items-center justify-between">
+              <span>Booking Estimate</span>
+              <span class="text-xs text-cyan-400 font-mono" id="calc-estimated-time">~45 mins</span>
+            </h4>
+
+            <div class="space-y-3 text-xs border-b border-slate-800 pb-5">
+              <div class="flex justify-between text-slate-400">
+                <span>Vehicle Type</span>
+                <span class="text-white font-medium" id="summary-selected-vehicle">Sedan / Coupe</span>
+              </div>
+              <div class="flex justify-between text-slate-400">
+                <span id="calc-pkg-name">Deluxe Package</span>
+                <span class="text-white font-medium" id="calc-pkg-price">$49.99</span>
+              </div>
+              <div class="flex justify-between text-slate-400">
+                <span>Selected Add-ons</span>
+                <span class="text-white font-medium" id="calc-addons-price">$0.00</span>
+              </div>
+              <div class="flex justify-between text-slate-400">
+                <span>Estimated Taxes (8.25%)</span>
+                <span class="text-white font-medium" id="calc-tax">$4.12</span>
+              </div>
+            </div>
+
+            <!-- Grand Total -->
+            <div class="flex justify-between items-baseline pt-4 mb-6">
+              <span class="text-xs uppercase font-bold text-slate-300">Estimated Total</span>
+              <span class="font-display font-black text-3xl text-cyan-400" id="calc-grand-total">$54.11</span>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800 text-[11px] text-slate-400 space-y-2">
+              <p class="flex items-center gap-2 text-slate-300 font-semibold">
+                <i class="fa-solid fa-shield-halved text-cyan-400"></i> No Upfront Payment Required
+              </p>
+              <p>Pay conveniently on site via Card, Apple Pay, Google Pay, or Cash after your car passes final quality inspection.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 4: LIVE WASH TRACKER -->
+    <section id="tracker" class="py-20 border-t border-slate-900 relative">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold mb-3">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Real-Time Bay Telemetry
+          </div>
+          <h2 class="font-display font-black text-3xl sm:text-5xl text-white tracking-tight mb-3">
+            Live Vehicle Status Tracker
+          </h2>
+          <p class="text-sm text-slate-400">Enter your Booking Reference or License Plate to inspect stage progress, assigned bay, and finish ETA.</p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="bg-slate-900/80 border border-slate-800 p-2 sm:p-3 rounded-2xl max-w-xl mx-auto mb-5 shadow-xl flex items-center gap-2">
+          <i class="fa-solid fa-magnifying-glass text-slate-400 ml-3"></i>
+          <input type="text" id="tracker-search-input" placeholder="Enter Booking ID (e.g. HS-7841) or Plate..." class="bg-transparent text-white text-xs sm:text-sm font-semibold flex-1 focus:outline-none px-2 uppercase">
+          <button type="button" id="tracker-search-btn" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-md shadow-cyan-500/20 transition">
+            Track Car
+          </button>
+        </div>
+
+        <!-- Demo Quick Click Pills -->
+        <div class="flex items-center justify-center flex-wrap gap-2 text-xs text-slate-400 mb-10">
+          <span class="text-slate-500 text-[11px]">Click demo bookings to test:</span>
+          <button type="button" class="demo-track-pill px-3 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-cyan-400 font-mono text-[11px]" data-query="HS-7841">
+            HS-7841 (Detailing)
+          </button>
+          <button type="button" class="demo-track-pill px-3 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-cyan-400 font-mono text-[11px]" data-query="HS-7842">
+            HS-7842 (Washing)
+          </button>
+          <button type="button" class="demo-track-pill px-3 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-cyan-400 font-mono text-[11px]" data-query="HS-7843">
+            HS-7843 (Ready)
+          </button>
+          <button type="button" class="demo-track-pill px-3 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-cyan-400 font-mono text-[11px]" data-query="HS-7844">
+            HS-7844 (Queued)
+          </button>
+        </div>
+
+        <!-- Render Target for Tracker Result Card -->
+        <div id="tracker-result-card">
+          <!-- Injected via tracker.js -->
+        </div>
+
+        <!-- Empty State (hidden by default) -->
+        <div id="tracker-empty-state" class="hidden"></div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 5: ECO-TECH WATER SYSTEM -->
+    <section id="eco-tech" class="py-20 bg-slate-900/30 border-t border-slate-800 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-widest text-teal-400 bg-teal-950/60 border border-teal-800/50 px-3 py-1 rounded-full">Environmental Stewardship</span>
+            <h2 class="font-display font-black text-3xl sm:text-4xl text-white tracking-tight mt-3 mb-6">
+              Clean Cars. Pure Water. <br>
+              <span class="text-teal-400">85% Water Reclaimed</span> on Site.
+            </h2>
+            <p class="text-sm text-slate-300 leading-relaxed mb-6">
+              A standard driveway car wash uses up to 100 gallons of potable municipal water and washes harsh detergents into municipal storm drains. HydroShine uses closed-loop multi-stage cyclonic filtration and reverse osmosis to recycle 85% of wash runoff.
+            </p>
+
+            <div class="space-y-4 text-xs">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-lg bg-teal-500/10 text-teal-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-leaf"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-white text-sm">100% Biodegradable Surfactants</h4>
+                  <p class="text-slate-400 mt-0.5">Gentle on ceramic paintwork and completely non-toxic to aquatic biology.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-filter"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-white text-sm">Reverse Osmosis De-ionization</h4>
+                  <p class="text-slate-400 mt-0.5">Removes dissolved minerals (TDS < 5 ppm) for a guaranteed spot-free finish without abrasive hand wiping.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-solar-panel"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-white text-sm">Solar-Powered High Velocity Blowers</h4>
+                  <p class="text-slate-400 mt-0.5">Our warm-air drying tunnels operate on 40kW rooftop solar arrays, reducing carbon emissions.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/60 p-4 shadow-2xl">
+              <img src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=1000&auto=format&fit=crop&q=80" alt="Eco Car Detailing" class="rounded-2xl w-full h-80 sm:h-96 object-cover brightness-90">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 6: TESTIMONIALS -->
+    <section id="reviews" class="py-20 border-t border-slate-900 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <span class="text-xs font-bold uppercase tracking-widest text-cyan-400 bg-cyan-950/60 border border-cyan-800/50 px-3 py-1 rounded-full">Customer Feedback</span>
+          <h2 class="font-display font-black text-3xl sm:text-5xl text-white tracking-tight mt-3 mb-3">
+            Trusted by 45,000+ Drivers
+          </h2>
+          <p class="text-sm text-slate-400">See what sports car enthusiasts, daily commuters, and families say about our auto spa experience.</p>
+        </div>
+
+        <div id="testimonials-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Injected via app.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 7: LOCATION, OPERATING HOURS & CONTACT -->
+    <section id="contact" class="py-20 bg-slate-900/40 border-t border-slate-800 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          
+          <!-- Contact Info & Hours (Span 5) -->
+          <div class="lg:col-span-5 space-y-8">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">Visit Our Facility</span>
+              <h3 class="font-display font-black text-3xl text-white mt-1 mb-3">Location & Service Hours</h3>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Equipped with 4 high-speed touchless bays, 6 detailing lounges, and a comfortable customer waiting suite with complimentary barista coffee and high-speed Wi-Fi.
+              </p>
+            </div>
+
+            <!-- Operating Hours Card -->
+            <div class="p-6 rounded-3xl bg-slate-950/80 border border-slate-800/90 space-y-3 text-xs">
+              <h4 class="font-bold text-white text-sm flex items-center gap-2 mb-2">
+                <i class="fa-regular fa-clock text-cyan-400"></i> Operating Schedule
+              </h4>
+              <div class="flex justify-between py-1 border-b border-slate-800 text-slate-300">
+                <span>Monday – Friday</span>
+                <span class="font-semibold text-cyan-400">07:30 AM – 07:00 PM</span>
+              </div>
+              <div class="flex justify-between py-1 border-b border-slate-800 text-slate-300">
+                <span>Saturday</span>
+                <span class="font-semibold text-cyan-400">08:00 AM – 06:30 PM</span>
+              </div>
+              <div class="flex justify-between py-1 text-slate-300">
+                <span>Sunday</span>
+                <span class="font-semibold text-cyan-400">09:00 AM – 05:00 PM</span>
+              </div>
+            </div>
+
+            <!-- Address & Phone -->
+            <div class="space-y-3 text-xs text-slate-300">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-cyan-400 shrink-0">
+                  <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <span>404 Metro Grand Boulevard, Tech District, Suite 100</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-cyan-400 shrink-0">
+                  <i class="fa-solid fa-phone"></i>
+                </div>
+                <span>Direct Line: +1 (555) 227-9274 (CAR-WASH)</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-cyan-400 shrink-0">
+                  <i class="fa-solid fa-envelope"></i>
+                </div>
+                <span>concierge@hydroshine-spa.com</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Contact / Inquiry Form (Span 7) -->
+          <div class="lg:col-span-7 bg-slate-950/80 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-xl">
+            <h4 class="font-display font-bold text-xl text-white mb-2">Send Us an Inquiry</h4>
+            <p class="text-xs text-slate-400 mb-6">Have fleet wash requirements, commercial inquiries, or specific detailing questions? Reach out directly.</p>
+
+            <form id="contact-form" class="space-y-4 text-xs">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-slate-300 font-semibold mb-1">Your Name</label>
+                  <input type="text" required placeholder="Alex Turner" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-white focus:border-cyan-500 focus:outline-none">
+                </div>
+                <div>
+                  <label class="block text-slate-300 font-semibold mb-1">Email or Phone</label>
+                  <input type="text" required placeholder="alex@company.com" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-white focus:border-cyan-500 focus:outline-none">
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-slate-300 font-semibold mb-1">Inquiry Type</label>
+                <select class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-white focus:border-cyan-500 focus:outline-none">
+                  <option value="detailing">Special Detailing Inquiry</option>
+                  <option value="fleet">Corporate Fleet Accounts</option>
+                  <option value="membership">Monthly Unlimited Pass</option>
+                  <option value="other">General Question</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-slate-300 font-semibold mb-1">Message</label>
+                <textarea rows="4" required placeholder="Tell us how we can help your vehicle..." class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-white focus:border-cyan-500 focus:outline-none"></textarea>
+              </div>
+
+              <button type="submit" class="w-full sm:w-auto px-8 py-3 rounded-xl font-bold text-xs bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-lg shadow-cyan-500/20 transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Submit Message</span>
+              </button>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- 2. STAFF / OPERATOR ADMIN PORTAL VIEW      -->
+  <!-- ========================================== -->
+  <main id="view-admin" class="hidden min-h-screen pb-20">
+    
+    <!-- Admin Top Banner -->
+    <div class="bg-slate-900 border-b border-slate-800 px-4 sm:px-8 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="px-2.5 py-1 rounded bg-cyan-500/20 text-cyan-400 font-mono text-xs font-bold border border-cyan-500/30">OPERATOR CONSOLE</span>
+        <h2 class="font-display font-black text-xl text-white">Live Bay Management & Dispatch</h2>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button type="button" id="admin-open-walkin-btn" class="px-4 py-2 rounded-xl text-xs font-bold bg-cyan-500 hover:bg-cyan-400 text-slate-950 transition flex items-center gap-1.5 shadow-md shadow-cyan-500/20">
+          <i class="fa-solid fa-plus"></i>
+          <span>Add Walk-In Drive-Through</span>
+        </button>
+
+        <button type="button" id="admin-export-csv-btn" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-file-csv text-emerald-400"></i>
+          <span>Export CSV</span>
+        </button>
+
+        <button type="button" id="admin-reset-demo-btn" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-rotate-left text-amber-400"></i>
+          <span>Reset Demo</span>
+        </button>
+
+        <button type="button" class="toggle-customer-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-500/30 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Exit to Customer Site</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+      
+      <!-- KPI Cards Row -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        
+        <div class="p-5 rounded-3xl bg-slate-900/80 border border-slate-800 flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-xl shrink-0">
+            <i class="fa-solid fa-car-side"></i>
+          </div>
+          <div>
+            <span class="text-xs text-slate-400 font-semibold block">Total Active Orders</span>
+            <span id="kpi-total-orders" class="font-display font-black text-2xl text-white">4</span>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-3xl bg-slate-900/80 border border-slate-800 flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-xl shrink-0">
+            <i class="fa-solid fa-soap"></i>
+          </div>
+          <div>
+            <span class="text-xs text-slate-400 font-semibold block">In Wash & Detail Bays</span>
+            <span id="kpi-active-bays" class="font-display font-black text-2xl text-cyan-400">2 Active</span>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-3xl bg-slate-900/80 border border-slate-800 flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl shrink-0">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <div>
+            <span class="text-xs text-slate-400 font-semibold block">Ready for Pickup</span>
+            <span id="kpi-ready-pickup" class="font-display font-black text-2xl text-emerald-400">1</span>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-3xl bg-slate-900/80 border border-slate-800 flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl shrink-0">
+            <i class="fa-solid fa-receipt"></i>
+          </div>
+          <div>
+            <span class="text-xs text-slate-400 font-semibold block">Today's Revenue</span>
+            <span id="kpi-revenue" class="font-display font-black text-2xl text-amber-400">$522.92</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Live Bay & Queue Section -->
+      <div class="bg-slate-900/70 border border-slate-800 rounded-3xl p-6 backdrop-blur-md shadow-2xl mb-8">
+        
+        <!-- Filter Controls -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          
+          <!-- Status Filter Pills -->
+          <div class="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 text-xs font-semibold">
+            <button type="button" class="admin-filter-btn px-3.5 py-1.5 rounded-xl bg-cyan-500 text-slate-950 font-bold transition" data-status="all">
+              All Orders
+            </button>
+            <button type="button" class="admin-filter-btn px-3.5 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition" data-status="queued">
+              In Queue
+            </button>
+            <button type="button" class="admin-filter-btn px-3.5 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition" data-status="washing">
+              Washing
+            </button>
+            <button type="button" class="admin-filter-btn px-3.5 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition" data-status="detailing">
+              Detailing
+            </button>
+            <button type="button" class="admin-filter-btn px-3.5 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition" data-status="ready">
+              Ready for Pickup
+            </button>
+          </div>
+
+          <!-- Search Input in Queue -->
+          <div class="relative w-full md:w-72">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+            <input type="text" id="admin-search-input" placeholder="Search customer, plate, ID..." class="w-full pl-8 pr-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:border-cyan-500 focus:outline-none">
+          </div>
+
+        </div>
+
+        <!-- Bookings Queue Table -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-slate-800 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <th class="py-3 px-4">Ref & Time</th>
+                <th class="py-3 px-4">Customer</th>
+                <th class="py-3 px-4">Vehicle & Plate</th>
+                <th class="py-3 px-4">Package & Bill</th>
+                <th class="py-3 px-4">Assigned Bay</th>
+                <th class="py-3 px-4">Live Bay Stage Status</th>
+                <th class="py-3 px-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-queue-tbody">
+              <!-- Injected via admin.js -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <!-- Analytics Charts Section -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <div class="p-6 rounded-3xl bg-slate-900/70 border border-slate-800">
+          <h4 class="font-display font-bold text-base text-white mb-4 flex items-center justify-between">
+            <span>Revenue Breakdown by Package</span>
+            <span class="text-xs text-slate-500">Gross Sales</span>
+          </h4>
+          <div class="h-64 relative">
+            <canvas id="chart-revenue"></canvas>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-3xl bg-slate-900/70 border border-slate-800">
+          <h4 class="font-display font-bold text-base text-white mb-4 flex items-center justify-between">
+            <span>Bay Volume Distribution</span>
+            <span class="text-xs text-slate-500">Live Stage Count</span>
+          </h4>
+          <div class="h-64 relative">
+            <canvas id="chart-volume"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- MODAL: QUICK WALK-IN REGISTRATION          -->
+  <!-- ========================================== -->
+  <div id="admin-walkin-modal" class="fixed inset-0 z-[100] bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
+        <h3 class="font-display font-bold text-xl text-white flex items-center gap-2">
+          <i class="fa-solid fa-car-burst text-cyan-400"></i>
+          <span>Add Drive-In / Walk-In Car</span>
+        </h3>
+        <button type="button" id="admin-close-walkin-btn" class="p-2 text-slate-400 hover:text-white">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <form id="admin-walkin-form" class="space-y-4 text-xs">
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">Customer Name</label>
+          <input type="text" id="walkin-name" required placeholder="e.g. John Doe" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-cyan-500 focus:outline-none">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">License Plate</label>
+            <input type="text" id="walkin-plate" required placeholder="e.g. 9ABC123" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-xl text-white uppercase font-mono tracking-wider focus:border-cyan-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-slate-300 font-semibold mb-1">Vehicle Category</label>
+            <select id="walkin-vehicle-type" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-cyan-500 focus:outline-none">
+              <option value="sedan">Sedan / Coupe</option>
+              <option value="hatchback">Hatchback / Compact</option>
+              <option value="suv">SUV / Crossover</option>
+              <option value="truck">Truck / Van</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">Car Model & Color</label>
+          <input type="text" id="walkin-model" placeholder="e.g. Mercedes C300 (Silver)" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-cyan-500 focus:outline-none">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">Package Choice</label>
+          <select id="walkin-package" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-cyan-500 focus:outline-none">
+            <option value="express">Express Foam Wash ($24.99)</option>
+            <option value="deluxe" selected>Deluxe Interior & Exterior ($49.99)</option>
+            <option value="ceramic">Ceramic Shield & Wax ($89.99)</option>
+            <option value="royal">Royal Concierge Detailing ($159.99)</option>
+          </select>
+        </div>
+
+        <div class="pt-4 flex justify-end gap-3">
+          <button type="submit" class="w-full py-3 rounded-xl font-bold text-xs bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-lg shadow-cyan-500/20 transition">
+            Dispatch to Bay 1 Queue
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: BOOKING SUCCESS RECEIPT             -->
+  <!-- ========================================== -->
+  <div id="booking-receipt-modal" class="fixed inset-0 z-[100] bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-700 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative text-center">
+      
+      <!-- Checkmark Icon with Glow -->
+      <div class="w-16 h-16 rounded-3xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-3xl mx-auto mb-4 border border-cyan-500/30">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+
+      <h3 class="font-display font-black text-2xl text-white mb-1">Booking Confirmed!</h3>
+      <p class="text-xs text-slate-400 mb-6">Your service slot has been reserved in our bay system.</p>
+
+      <!-- Booking Pass Card -->
+      <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 text-left text-xs space-y-3 mb-6 relative overflow-hidden">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+          <span class="text-slate-500 font-semibold text-[11px]">BOOKING CODE</span>
+          <span id="receipt-booking-id" class="font-mono text-cyan-400 font-black text-sm">HS-0000</span>
+        </div>
+
+        <div class="flex justify-between">
+          <span class="text-slate-400">Customer</span>
+          <span id="receipt-customer-name" class="font-bold text-white">Customer</span>
+        </div>
+
+        <div class="flex justify-between">
+          <span class="text-slate-400">Vehicle</span>
+          <span id="receipt-vehicle-info" class="font-bold text-white">Vehicle</span>
+        </div>
+
+        <div class="flex justify-between">
+          <span class="text-slate-400">Package</span>
+          <span id="receipt-package-name" class="font-bold text-cyan-300">Package</span>
+        </div>
+
+        <div class="flex justify-between">
+          <span class="text-slate-400">Date & Time</span>
+          <span id="receipt-slot-info" class="font-bold text-white">Time</span>
+        </div>
+
+        <div class="flex justify-between">
+          <span class="text-slate-400">Check-in Bay</span>
+          <span id="receipt-bay-info" class="font-bold text-slate-300">Queue Bay 1</span>
+        </div>
+
+        <div class="border-t border-slate-800 pt-2 flex justify-between items-center font-bold">
+          <span class="text-slate-300 uppercase text-[10px]">Total Due on Site</span>
+          <span id="receipt-total-amount" class="text-lg text-cyan-400 font-black">$0.00</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="space-y-2">
+        <button type="button" id="receipt-track-now-btn" class="w-full py-3 rounded-xl font-bold text-xs bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-lg shadow-cyan-500/25 transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-satellite-dish"></i>
+          <span>Track Progress on Live Tracker</span>
+        </button>
+
+        <button type="button" id="close-receipt-modal-btn" class="w-full py-2.5 rounded-xl font-semibold text-xs bg-slate-900 hover:bg-slate-800 text-slate-300 transition">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-950 border-t border-slate-900 py-12 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 rounded-lg bg-cyan-500 flex items-center justify-center text-slate-950 font-bold text-xs">
+          <i class="fa-solid fa-droplet"></i>
+        </div>
+        <span class="font-display font-bold text-slate-300">HYDROSHINE AUTO SPA & DETAILED CARE</span>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <a href="#packages" class="hover:text-cyan-400 transition">Pricing</a>
+        <a href="#booking" class="hover:text-cyan-400 transition">Book Now</a>
+        <a href="#tracker" class="hover:text-cyan-400 transition">Live Tracker</a>
+        <button type="button" class="toggle-admin-btn hover:text-cyan-400 transition">Operator Console</button>
+      </div>
+
+      <p>© 2026 HydroShine Technologies Inc. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Application Scripts (Self-Contained & Instant-Running) -->
+  <script>
+/**
+ * HydroShine Auto Spa & Detailing System
+ * Central Mock Data & Configuration
+ */
+const VEHICLE_TYPES = [
+  {
+    id: 'sedan',
+    name: 'Sedan / Coupe',
+    icon: 'fa-car-side',
+    multiplier: 1.0,
+    description: 'Standard 4-door passenger cars and sports coupes'
+  },
+  {
+    id: 'hatchback',
+    name: 'Hatchback / Compact',
+    icon: 'fa-car',
+    multiplier: 0.9,
+    description: 'Compact cars, mini crossovers and city vehicles'
+  },
+  {
+    id: 'suv',
+    name: 'SUV / Crossover',
+    icon: 'fa-truck-monster',
+    multiplier: 1.25,
+    description: 'Compact to mid-size SUVs, station wagons'
+  },
+  {
+    id: 'truck',
+    name: 'Truck / Large Van',
+    icon: 'fa-truck-pickup',
+    multiplier: 1.45,
+    description: 'Heavy duty pickups, 7-seater large SUVs, minivans'
+  }
+];
+
+const PACKAGES = [
+  {
+    id: 'express',
+    name: 'Express Foam Wash',
+    tagline: 'Quick exterior refresh for daily drivers',
+    basePrice: 24.99,
+    estimatedMinutes: 20,
+    popular: false,
+    badge: 'Quick & Clean',
+    color: 'from-blue-500 to-cyan-500',
+    features: [
+      'Touchless high-pressure pre-rinse',
+      'pH-balanced snow foam shampoo wash',
+      'Wheel face degreasing & tire rinse',
+      'Spot-free reverse osmosis rinse',
+      'Warm air blow dry & microfiber buff'
+    ]
+  },
+  {
+    id: 'deluxe',
+    name: 'Deluxe Interior & Exterior',
+    tagline: 'Complete in-and-out care for high comfort',
+    basePrice: 49.99,
+    estimatedMinutes: 45,
+    popular: true,
+    badge: 'Most Popular',
+    color: 'from-cyan-500 to-teal-500',
+    features: [
+      'Everything in Express Foam Wash',
+      'Deep interior cabin & trunk vacuum',
+      'Dashboard, console & vinyl wipe down',
+      'Interior & exterior crystal glass polish',
+      'Tire dress & deep wet gloss shine',
+      'Fresh scented cabin air freshener'
+    ]
+  },
+  {
+    id: 'ceramic',
+    name: 'Ceramic Shield & Wax',
+    tagline: 'Long-lasting hydrophobic gloss and UV shield',
+    basePrice: 89.99,
+    estimatedMinutes: 70,
+    popular: false,
+    badge: 'Ultimate Gloss',
+    color: 'from-amber-500 to-orange-500',
+    features: [
+      'Everything in Deluxe Package',
+      'Hand-applied synthetic ceramic spray wax',
+      'Rim iron decontaminant & inner barrel scrub',
+      'Door jambs, boot hinges cleaned & dried',
+      'Floor mats pressure washed & dried',
+      '60-day hydrophobic water beading shield'
+    ]
+  },
+  {
+    id: 'royal',
+    name: 'Royal Concierge Detailing',
+    tagline: 'Showroom perfection: deep extraction & restoration',
+    basePrice: 159.99,
+    estimatedMinutes: 120,
+    popular: false,
+    badge: 'Showroom Level',
+    color: 'from-purple-500 to-indigo-600',
+    features: [
+      'Everything in Ceramic Shield & Wax',
+      'Full upholstery steam cleaning & shampoo',
+      'Leather deep cleanse & restorative conditioner',
+      'Engine bay degreasing & plastic dressing',
+      'Headlight clarity touch-up polish',
+      'Ozone interior anti-microbial disinfection'
+    ]
+  }
+];
+
+const ADDONS = [
+  {
+    id: 'engine_bay',
+    name: 'Engine Bay Detailing',
+    price: 29.99,
+    icon: 'fa-cogs',
+    duration: 15,
+    description: 'Safe steam clean, oil residue degrease and silicone satin dress'
+  },
+  {
+    id: 'pet_hair',
+    name: 'Heavy Pet Hair Extraction',
+    price: 24.99,
+    icon: 'fa-paw',
+    duration: 20,
+    description: 'Specialized rubber combs and dual-motor vacuum for deep pet fur removal'
+  },
+  {
+    id: 'ozone',
+    name: 'Ozone Sanitization & Odor Kill',
+    price: 19.99,
+    icon: 'fa-shield-virus',
+    duration: 15,
+    description: 'Hospital-grade gas cycle that neutralizes bacteria, mold & smoke odors'
+  },
+  {
+    id: 'rain_repel',
+    name: 'Rain-X Ultra Glass Treatment',
+    price: 14.99,
+    icon: 'fa-cloud-rain',
+    duration: 10,
+    description: 'Repels heavy rain, sleet and bugs for crystal-clear storm driving'
+  },
+  {
+    id: 'leather_care',
+    name: 'Nourishing Leather Treatment',
+    price: 22.99,
+    icon: 'fa-couch',
+    duration: 15,
+    description: 'UV protection cream that restores soft touch and prevents cracking'
+  },
+  {
+    id: 'undercarriage',
+    name: 'Undercarriage Salt & Mud Blast',
+    price: 12.99,
+    icon: 'fa-water',
+    duration: 10,
+    description: 'High-pressure chassis wash removing road salts, winter brine and grit'
+  }
+];
+
+const TIME_SLOTS = [
+  '08:00 AM', '09:00 AM', '10:00 AM', '11:00 AM',
+  '12:00 PM', '01:00 PM', '02:00 PM', '03:00 PM',
+  '04:00 PM', '05:00 PM', '06:00 PM'
+];
+
+const WASH_STATUSES = {
+  QUEUED: { key: 'queued', label: 'In Queue', icon: 'fa-clock', color: 'bg-amber-500/10 text-amber-500 border-amber-500/20' },
+  WASHING: { key: 'washing', label: 'Pre-Rinse & Foam Bath', icon: 'fa-soap', color: 'bg-blue-500/10 text-blue-400 border-blue-500/20' },
+  DETAILING: { key: 'detailing', label: 'Interior & Detailing', icon: 'fa-brush', color: 'bg-purple-500/10 text-purple-400 border-purple-500/20' },
+  DRYING: { key: 'drying', label: 'Ceramic Coat & Drying', icon: 'fa-wind', color: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' },
+  READY: { key: 'ready', label: 'Ready for Pickup', icon: 'fa-circle-check', color: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' },
+  COMPLETED: { key: 'completed', label: 'Completed & Delivered', icon: 'fa-flag-checkered', color: 'bg-gray-500/10 text-gray-400 border-gray-500/20' }
+};
+
+const INITIAL_BOOKINGS = [
+  {
+    id: 'HS-7841',
+    createdAt: new Date(Date.now() - 45 * 60000).toISOString(),
+    customerName: 'Marcus Vance',
+    customerPhone: '+1 (555) 234-8901',
+    customerEmail: 'm.vance@example.com',
+    vehicleType: 'suv',
+    vehicleModel: 'Porsche Cayenne Turbo (Sapphire Blue)',
+    licensePlate: '7XYZ890',
+    packageId: 'ceramic',
+    addOnIds: ['rain_repel', 'engine_bay'],
+    bookingDate: new Date().toISOString().split('T')[0],
+    timeSlot: '02:00 PM',
+    bayNumber: 'Bay 2',
+    technician: 'Alex Rivera',
+    totalPrice: 157.48,
+    status: 'detailing',
+    notes: 'Please pay extra attention to brake dust on 21-inch rims.'
+  },
+  {
+    id: 'HS-7842',
+    createdAt: new Date(Date.now() - 20 * 60000).toISOString(),
+    customerName: 'Elena Rostova',
+    customerPhone: '+1 (555) 678-1234',
+    customerEmail: 'elena.rostova@example.com',
+    vehicleType: 'sedan',
+    vehicleModel: 'Tesla Model 3 Long Range (Pearl White)',
+    licensePlate: 'TES-2024',
+    packageId: 'deluxe',
+    addOnIds: ['pet_hair'],
+    bookingDate: new Date().toISOString().split('T')[0],
+    timeSlot: '03:00 PM',
+    bayNumber: 'Bay 1',
+    technician: 'Sam Chen',
+    totalPrice: 74.98,
+    status: 'washing',
+    notes: 'Pet golden retriever fur in rear seating.'
+  },
+  {
+    id: 'HS-7843',
+    createdAt: new Date(Date.now() - 80 * 60000).toISOString(),
+    customerName: 'David K. Miller',
+    customerPhone: '+1 (555) 901-4567',
+    customerEmail: 'dkmiller@example.com',
+    vehicleType: 'truck',
+    vehicleModel: 'Ford F-150 Raptor (Magnetic Gray)',
+    licensePlate: 'RAP-991',
+    packageId: 'royal',
+    addOnIds: ['undercarriage', 'leather_care'],
+    bookingDate: new Date().toISOString().split('T')[0],
+    timeSlot: '11:00 AM',
+    bayNumber: 'Bay 3',
+    technician: 'Leo Martinez',
+    totalPrice: 267.97,
+    status: 'ready',
+    notes: 'Muddy undercarriage from trail run.'
+  },
+  {
+    id: 'HS-7844',
+    createdAt: new Date(Date.now() - 10 * 60000).toISOString(),
+    customerName: 'Sarah Jenkins',
+    customerPhone: '+1 (555) 432-8765',
+    customerEmail: 'sarah.j@example.com',
+    vehicleType: 'hatchback',
+    vehicleModel: 'Volkswagen Golf R (Lapiz Blue)',
+    licensePlate: 'VW-404',
+    packageId: 'express',
+    addOnIds: [],
+    bookingDate: new Date().toISOString().split('T')[0],
+    timeSlot: '04:00 PM',
+    bayNumber: 'Queue Area',
+    technician: 'Pending Assignment',
+    totalPrice: 22.49,
+    status: 'queued',
+    notes: 'Quick touch-up before airport trip.'
+  }
+];
+
+const TESTIMONIALS = [
+  {
+    name: 'Julian Sterling',
+    role: 'BMW M4 Competition Owner',
+    rating: 5,
+    comment: 'The touchless ceramic wash is genuinely second to none. Not a single swirl mark on my mineral gray paint, and the live status tracker let me sip coffee across the street without wondering when it was done.',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    date: 'Yesterday'
+  },
+  {
+    name: 'Melissa Thorne',
+    role: 'Audi Q7 Family SUV',
+    rating: 5,
+    comment: 'With 3 kids and a Golden Retriever, my interior was chaotic. The Royal Concierge detail completely erased two years of spills and pet hair. It feels like driving off the dealership lot again!',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
+    date: '3 days ago'
+  },
+  {
+    name: 'Robert C. Nguyen',
+    role: 'Mercedes AMG GT-C',
+    rating: 5,
+    comment: 'Precision, punctuality, and eco-conscious water reclamation. As someone who is obsessive about car detailing, HydroShine is the only place in the metro area I trust with my vehicle.',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    date: '1 week ago'
+  }
+];
+
+window.CarWashData = {
+  VEHICLE_TYPES,
+  PACKAGES,
+  ADDONS,
+  TIME_SLOTS,
+  WASH_STATUSES,
+  INITIAL_BOOKINGS,
+  TESTIMONIALS
+};
+
+/**
+ * HydroShine State Store
+ */
+class CarWashStore {
+  constructor() {
+    this.STORAGE_KEY = 'HYDROSHINE_BOOKINGS_V1';
+    this.listeners = new Map();
+    this.init();
+  }
+
+  init() {
+    const raw = localStorage.getItem(this.STORAGE_KEY);
+    if (!raw) {
+      this.resetToDefaults();
+    }
+  }
+
+  resetToDefaults() {
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(window.CarWashData.INITIAL_BOOKINGS));
+    this.emit('bookings_updated', this.getAllBookings());
+  }
+
+  getAllBookings() {
+    try {
+      const raw = localStorage.getItem(this.STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      console.error('Failed to parse bookings from localStorage', e);
+      return [];
+    }
+  }
+
+  getBookingByIdOrPlate(query) {
+    if (!query) return null;
+    const cleanQuery = query.trim().toUpperCase().replace(/[\s-]/g, '');
+    const bookings = this.getAllBookings();
+
+    return bookings.find(b => {
+      const bId = (b.id || '').toUpperCase().replace(/[\s-]/g, '');
+      const bPlate = (b.licensePlate || '').toUpperCase().replace(/[\s-]/g, '');
+      const bPhone = (b.customerPhone || '').replace(/\D/g, '');
+      const cleanQDigits = cleanQuery.replace(/\D/g, '');
+
+      return bId === cleanQuery || 
+             bPlate === cleanQuery || 
+             (cleanQDigits.length >= 7 && bPhone.endsWith(cleanQDigits));
+    }) || null;
+  }
+
+  createBooking(bookingInput) {
+    const bookings = this.getAllBookings();
+    const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+    const newId = `HS-${randomSuffix}`;
+
+    const newBooking = {
+      id: newId,
+      createdAt: new Date().toISOString(),
+      status: 'queued',
+      bayNumber: 'Queue Bay 1',
+      technician: 'Assigned on arrival',
+      ...bookingInput
+    };
+
+    bookings.unshift(newBooking);
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(bookings));
+    this.emit('bookings_updated', bookings);
+    this.emit('booking_created', newBooking);
+
+    return newBooking;
+  }
+
+  updateBooking(id, partial) {
+    const bookings = this.getAllBookings();
+    const index = bookings.findIndex(b => b.id === id);
+    if (index === -1) return null;
+
+    bookings[index] = { ...bookings[index], ...partial, updatedAt: new Date().toISOString() };
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(bookings));
+    this.emit('bookings_updated', bookings);
+    this.emit('booking_changed', bookings[index]);
+    return bookings[index];
+  }
+
+  updateStatus(id, newStatus) {
+    const current = this.getAllBookings().find(b => b.id === id);
+    if (!current) return null;
+
+    let bay = current.bayNumber;
+    let tech = current.technician;
+
+    if (newStatus === 'washing' && bay.includes('Queue')) {
+      bay = 'Bay 1';
+      tech = tech.includes('Assigned') ? 'Sam Chen' : tech;
+    } else if (newStatus === 'detailing' && bay.includes('Queue')) {
+      bay = 'Bay 2';
+      tech = tech.includes('Assigned') ? 'Alex Rivera' : tech;
+    } else if (newStatus === 'ready') {
+      bay = 'Pickup Lounge';
+    }
+
+    return this.updateBooking(id, { status: newStatus, bayNumber: bay, technician: tech });
+  }
+
+  deleteBooking(id) {
+    let bookings = this.getAllBookings();
+    bookings = bookings.filter(b => b.id !== id);
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(bookings));
+    this.emit('bookings_updated', bookings);
+  }
+
+  subscribe(event, callback) {
+    if (!this.listeners.has(event)) {
+      this.listeners.set(event, []);
+    }
+    this.listeners.get(event).push(callback);
+    return () => {
+      const list = this.listeners.get(event) || [];
+      this.listeners.set(event, list.filter(cb => cb !== callback));
+    };
+  }
+
+  emit(event, payload) {
+    const list = this.listeners.get(event) || [];
+    list.forEach(cb => {
+      try {
+        cb(payload);
+      } catch (err) {
+        console.error(`Error in event listener for ${event}:`, err);
+      }
+    });
+  }
+}
+
+window.carWashStore = new CarWashStore();
+
+/**
+ * HydroShine Booking Wizard Engine
+ */
+class BookingEngine {
+  constructor() {
+    this.currentStep = 1;
+    this.totalSteps = 4;
+    
+    this.state = {
+      vehicleType: 'sedan',
+      packageId: 'deluxe',
+      addOnIds: [],
+      bookingDate: this.getDefaultDate(),
+      timeSlot: '10:00 AM',
+      customerName: '',
+      customerPhone: '',
+      customerEmail: '',
+      vehicleModel: '',
+      licensePlate: '',
+      notes: ''
+    };
+
+    this.init();
+  }
+
+  getDefaultDate() {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  }
+
+  init() {
+    this.renderVehicleTypes();
+    this.renderPackages();
+    this.renderAddOns();
+    this.renderTimeSlots();
+    this.setupEventListeners();
+    this.updateCalculation();
+    this.updateStepUI();
+  }
+
+  setupEventListeners() {
+    document.getElementById('wizard-next-btn')?.addEventListener('click', () => this.handleNext());
+    document.getElementById('wizard-prev-btn')?.addEventListener('click', () => this.handlePrev());
+    document.getElementById('wizard-submit-btn')?.addEventListener('click', () => this.handleSubmit());
+
+    const dateInput = document.getElementById('booking-date-input');
+    if (dateInput) {
+      dateInput.min = this.getDefaultDate();
+      dateInput.value = this.state.bookingDate;
+      dateInput.addEventListener('change', (e) => {
+        this.state.bookingDate = e.target.value;
+        this.updateCalculation();
+      });
+    }
+
+    const bindInput = (id, prop) => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('input', (e) => {
+          this.state[prop] = e.target.value;
+        });
+      }
+    };
+
+    bindInput('input-name', 'customerName');
+    bindInput('input-phone', 'customerPhone');
+    bindInput('input-email', 'customerEmail');
+    bindInput('input-vehicle-model', 'vehicleModel');
+    bindInput('input-license-plate', 'licensePlate');
+    bindInput('input-notes', 'notes');
+  }
+
+  renderVehicleTypes() {
+    const container = document.getElementById('vehicle-types-container');
+    if (!container) return;
+
+    container.innerHTML = window.CarWashData.VEHICLE_TYPES.map(vt => {
+      const isSelected = this.state.vehicleType === vt.id;
+      return `
+        <div class="vehicle-card group cursor-pointer relative p-5 rounded-2xl border-2 transition-all duration-300 ${
+          isSelected 
+            ? 'border-cyan-500 bg-cyan-950/20 shadow-lg shadow-cyan-500/10' 
+            : 'border-slate-800 bg-slate-900/60 hover:border-slate-700 hover:bg-slate-900/90'
+        }" data-vehicle-id="${vt.id}">
+          <div class="flex items-center justify-between mb-3">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-xl ${
+              isSelected ? 'bg-cyan-500 text-slate-950 font-bold' : 'bg-slate-800 text-cyan-400 group-hover:bg-slate-700'
+            }">
+              <i class="fa-solid ${vt.icon}"></i>
+            </div>
+            <span class="text-xs font-semibold px-2.5 py-1 rounded-full ${
+              vt.multiplier > 1.0 ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+            }">
+              ${vt.multiplier === 1.0 ? 'Standard Size' : vt.multiplier < 1.0 ? '-10% Discount' : `+${Math.round((vt.multiplier - 1) * 100)}% Large`}
+            </span>
+          </div>
+          <h4 class="font-bold text-white text-base mb-1">${vt.name}</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">${vt.description}</p>
+        </div>
+      `;
+    }).join('');
+
+    container.querySelectorAll('.vehicle-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.getAttribute('data-vehicle-id');
+        this.state.vehicleType = id;
+        this.renderVehicleTypes();
+        this.renderPackages();
+        this.updateCalculation();
+      });
+    });
+  }
+
+  getVehicleMultiplier() {
+    const v = window.CarWashData.VEHICLE_TYPES.find(item => item.id === this.state.vehicleType);
+    return v ? v.multiplier : 1.0;
+  }
+
+  renderPackages() {
+    const container = document.getElementById('packages-container');
+    if (!container) return;
+
+    const mult = this.getVehicleMultiplier();
+
+    container.innerHTML = window.CarWashData.PACKAGES.map(pkg => {
+      const isSelected = this.state.packageId === pkg.id;
+      const adjustedPrice = (pkg.basePrice * mult).toFixed(2);
+
+      return `
+        <div class="package-card cursor-pointer relative p-5 rounded-2xl border-2 transition-all duration-300 flex flex-col justify-between ${
+          isSelected 
+            ? 'border-cyan-400 bg-gradient-to-b from-cyan-950/40 to-slate-900 shadow-xl shadow-cyan-500/15' 
+            : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
+        }" data-pkg-id="${pkg.id}">
+          <div>
+            <div class="flex justify-between items-start mb-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/80 px-2.5 py-1 rounded-md border border-cyan-800/40">
+                ${pkg.badge}
+              </span>
+              <span class="text-xs text-slate-400 flex items-center gap-1">
+                <i class="fa-regular fa-clock"></i> ~${pkg.estimatedMinutes}m
+              </span>
+            </div>
+            <h4 class="text-lg font-bold text-white mt-2">${pkg.name}</h4>
+            <p class="text-xs text-slate-400 mt-1 mb-4 leading-relaxed">${pkg.tagline}</p>
+            
+            <div class="flex items-baseline gap-1 my-3">
+              <span class="text-3xl font-extrabold text-white tracking-tight">$${adjustedPrice}</span>
+              <span class="text-xs text-slate-400">/ wash</span>
+            </div>
+
+            <ul class="space-y-2 mt-4 pt-4 border-t border-slate-800/80 text-xs text-slate-300">
+              ${pkg.features.map(f => `
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-cyan-400 text-[11px] shrink-0"></i>
+                  <span>${f}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+
+          <div class="mt-6 pt-2">
+            <button class="w-full py-2.5 px-4 rounded-xl font-semibold text-xs transition flex items-center justify-center gap-2 ${
+              isSelected 
+                ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/25 font-bold' 
+                : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+            }">
+              <i class="fa-solid ${isSelected ? 'fa-circle-check' : 'fa-circle'}"></i>
+              ${isSelected ? 'Selected Package' : 'Choose Package'}
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    container.querySelectorAll('.package-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.getAttribute('data-pkg-id');
+        this.state.packageId = id;
+        this.renderPackages();
+        this.updateCalculation();
+      });
+    });
+  }
+
+  renderAddOns() {
+    const container = document.getElementById('addons-container');
+    if (!container) return;
+
+    container.innerHTML = window.CarWashData.ADDONS.map(addon => {
+      const isChecked = this.state.addOnIds.includes(addon.id);
+      return `
+        <label class="addon-item flex items-start gap-3.5 p-4 rounded-2xl border-2 cursor-pointer transition-all ${
+          isChecked 
+            ? 'border-cyan-500/70 bg-cyan-950/20 shadow-md shadow-cyan-500/5' 
+            : 'border-slate-800/90 bg-slate-900/50 hover:border-slate-700'
+        }">
+          <input type="checkbox" value="${addon.id}" ${isChecked ? 'checked' : ''} class="addon-checkbox mt-1 w-4 h-4 rounded text-cyan-500 bg-slate-800 border-slate-700 focus:ring-cyan-500/40">
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-semibold text-sm text-white flex items-center gap-2">
+                <i class="fa-solid ${addon.icon} text-cyan-400 text-xs"></i>
+                ${addon.name}
+              </span>
+              <span class="text-xs font-bold text-cyan-300">+$${addon.price.toFixed(2)}</span>
+            </div>
+            <p class="text-xs text-slate-400 leading-snug">${addon.description}</p>
+          </div>
+        </label>
+      `;
+    }).join('');
+
+    container.querySelectorAll('.addon-checkbox').forEach(input => {
+      input.addEventListener('change', (e) => {
+        const id = e.target.value;
+        if (e.target.checked) {
+          if (!this.state.addOnIds.includes(id)) this.state.addOnIds.push(id);
+        } else {
+          this.state.addOnIds = this.state.addOnIds.filter(x => x !== id);
+        }
+        this.renderAddOns();
+        this.updateCalculation();
+      });
+    });
+  }
+
+  renderTimeSlots() {
+    const container = document.getElementById('time-slots-container');
+    if (!container) return;
+
+    container.innerHTML = window.CarWashData.TIME_SLOTS.map(slot => {
+      const isSelected = this.state.timeSlot === slot;
+      return `
+        <button type="button" class="timeslot-btn py-2 px-3 text-xs font-semibold rounded-xl border transition-all ${
+          isSelected 
+            ? 'border-cyan-400 bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20' 
+            : 'border-slate-800 bg-slate-900/70 text-slate-300 hover:border-slate-700 hover:bg-slate-800'
+        }" data-slot="${slot}">
+          ${slot}
+        </button>
+      `;
+    }).join('');
+
+    container.querySelectorAll('.timeslot-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.state.timeSlot = btn.getAttribute('data-slot');
+        this.renderTimeSlots();
+        this.updateCalculation();
+      });
+    });
+  }
+
+  calculateTotal() {
+    const mult = this.getVehicleMultiplier();
+    const pkg = window.CarWashData.PACKAGES.find(p => p.id === this.state.packageId) || window.CarWashData.PACKAGES[0];
+    const packageSubtotal = pkg.basePrice * mult;
+
+    let addonsSubtotal = 0;
+    let totalMinutes = pkg.estimatedMinutes;
+
+    this.state.addOnIds.forEach(addonId => {
+      const item = window.CarWashData.ADDONS.find(a => a.id === addonId);
+      if (item) {
+        addonsSubtotal += item.price;
+        totalMinutes += item.duration;
+      }
+    });
+
+    const tax = (packageSubtotal + addonsSubtotal) * 0.0825;
+    const grandTotal = packageSubtotal + addonsSubtotal + tax;
+
+    return {
+      packageSubtotal,
+      addonsSubtotal,
+      tax,
+      grandTotal,
+      totalMinutes,
+      packageName: pkg.name
+    };
+  }
+
+  updateCalculation() {
+    const calc = this.calculateTotal();
+    const elements = {
+      'calc-pkg-name': calc.packageName,
+      'calc-pkg-price': `$${calc.packageSubtotal.toFixed(2)}`,
+      'calc-addons-price': `$${calc.addonsSubtotal.toFixed(2)}`,
+      'calc-tax': `$${calc.tax.toFixed(2)}`,
+      'calc-grand-total': `$${calc.grandTotal.toFixed(2)}`,
+      'calc-estimated-time': `~${calc.totalMinutes} mins`,
+      'summary-selected-vehicle': window.CarWashData.VEHICLE_TYPES.find(v => v.id === this.state.vehicleType)?.name || 'Sedan',
+      'summary-selected-date': `${this.state.bookingDate} at ${this.state.timeSlot}`
+    };
+
+    for (const [id, val] of Object.entries(elements)) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    }
+  }
+
+  handleNext() {
+    if (this.currentStep === 1) {
+      if (!this.state.vehicleType) {
+        window.showToast?.('Please select your vehicle type', 'warning');
+        return;
+      }
+    } else if (this.currentStep === 2) {
+      if (!this.state.packageId) {
+        window.showToast?.('Please select a wash package', 'warning');
+        return;
+      }
+    } else if (this.currentStep === 3) {
+      if (!this.state.bookingDate || !this.state.timeSlot) {
+        window.showToast?.('Please pick a date and time slot', 'warning');
+        return;
+      }
+    }
+
+    if (this.currentStep < this.totalSteps) {
+      this.currentStep++;
+      this.updateStepUI();
+      document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  handlePrev() {
+    if (this.currentStep > 1) {
+      this.currentStep--;
+      this.updateStepUI();
+    }
+  }
+
+  updateStepUI() {
+    for (let i = 1; i <= this.totalSteps; i++) {
+      const stepEl = document.getElementById(`wizard-step-${i}`);
+      const stepPill = document.getElementById(`step-indicator-${i}`);
+      
+      if (stepEl) {
+        if (i === this.currentStep) {
+          stepEl.classList.remove('hidden');
+        } else {
+          stepEl.classList.add('hidden');
+        }
+      }
+
+      if (stepPill) {
+        if (i === this.currentStep) {
+          stepPill.className = 'w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/30';
+          stepPill.textContent = `${i}`;
+        } else if (i < this.currentStep) {
+          stepPill.className = 'w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm bg-emerald-500 text-slate-950';
+          stepPill.innerHTML = '<i class="fa-solid fa-check"></i>';
+        } else {
+          stepPill.className = 'w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm bg-slate-800 text-slate-400 border border-slate-700';
+          stepPill.textContent = `${i}`;
+        }
+      }
+    }
+
+    const prevBtn = document.getElementById('wizard-prev-btn');
+    const nextBtn = document.getElementById('wizard-next-btn');
+    const submitBtn = document.getElementById('wizard-submit-btn');
+
+    if (prevBtn) {
+      prevBtn.style.visibility = this.currentStep === 1 ? 'hidden' : 'visible';
+    }
+
+    if (this.currentStep === this.totalSteps) {
+      if (nextBtn) nextBtn.classList.add('hidden');
+      if (submitBtn) submitBtn.classList.remove('hidden');
+      this.populateReviewStep();
+    } else {
+      if (nextBtn) nextBtn.classList.remove('hidden');
+      if (submitBtn) submitBtn.classList.add('hidden');
+    }
+  }
+
+  populateReviewStep() {
+    const calc = this.calculateTotal();
+    const pkg = window.CarWashData.PACKAGES.find(p => p.id === this.state.packageId);
+    const vehicle = window.CarWashData.VEHICLE_TYPES.find(v => v.id === this.state.vehicleType);
+    
+    const reviewBox = document.getElementById('wizard-review-summary');
+    if (!reviewBox) return;
+
+    const addonsText = this.state.addOnIds.length > 0 
+      ? this.state.addOnIds.map(id => {
+          const a = window.CarWashData.ADDONS.find(item => item.id === id);
+          return `<span class="inline-block bg-slate-800 border border-slate-700 text-slate-300 text-xs px-2.5 py-1 rounded-lg mr-1 mb-1">+ ${a.name} ($${a.price.toFixed(2)})</span>`;
+        }).join('') 
+      : '<span class="text-xs text-slate-500 italic">No add-ons selected</span>';
+
+    reviewBox.innerHTML = `
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800/80 pb-3">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-car text-cyan-400"></i>
+            <span class="text-xs text-slate-400 uppercase font-semibold">Service Details</span>
+          </div>
+          <span class="text-sm font-bold text-white">${pkg?.name}</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 text-xs">
+          <div>
+            <span class="text-slate-400 block mb-0.5">Vehicle Category</span>
+            <span class="text-white font-medium">${vehicle?.name}</span>
+          </div>
+          <div>
+            <span class="text-slate-400 block mb-0.5">Slot Scheduled</span>
+            <span class="text-cyan-400 font-semibold">${this.state.bookingDate} at ${this.state.timeSlot}</span>
+          </div>
+        </div>
+
+        <div>
+          <span class="text-slate-400 text-xs block mb-1.5">Selected Add-ons</span>
+          <div class="flex flex-wrap">${addonsText}</div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-800/80 flex justify-between items-center">
+          <span class="text-xs text-slate-400">Estimated Duration: <strong class="text-white">~${calc.totalMinutes} mins</strong></span>
+          <div class="text-right">
+            <span class="text-xs text-slate-400 block">Total Payable on Site</span>
+            <span class="text-2xl font-black text-cyan-400">$${calc.grandTotal.toFixed(2)}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  handleSubmit() {
+    if (!this.state.customerName.trim()) {
+      window.showToast?.('Please enter your full name', 'error');
+      document.getElementById('input-name')?.focus();
+      return;
+    }
+
+    if (!this.state.customerPhone.trim() || this.state.customerPhone.length < 7) {
+      window.showToast?.('Please enter a valid phone number', 'error');
+      document.getElementById('input-phone')?.focus();
+      return;
+    }
+
+    if (!this.state.licensePlate.trim()) {
+      window.showToast?.('Please enter your vehicle license plate', 'error');
+      document.getElementById('input-license-plate')?.focus();
+      return;
+    }
+
+    const calc = this.calculateTotal();
+
+    const bookingPayload = {
+      customerName: this.state.customerName.trim(),
+      customerPhone: this.state.customerPhone.trim(),
+      customerEmail: this.state.customerEmail.trim() || 'Not provided',
+      vehicleType: this.state.vehicleType,
+      vehicleModel: this.state.vehicleModel.trim() || 'Customer Vehicle',
+      licensePlate: this.state.licensePlate.trim().toUpperCase(),
+      packageId: this.state.packageId,
+      addOnIds: [...this.state.addOnIds],
+      bookingDate: this.state.bookingDate,
+      timeSlot: this.state.timeSlot,
+      totalPrice: Number(calc.grandTotal.toFixed(2)),
+      durationMinutes: calc.totalMinutes,
+      notes: this.state.notes.trim()
+    };
+
+    const created = window.carWashStore.createBooking(bookingPayload);
+
+    if (typeof confetti === 'function') {
+      confetti({
+        particleCount: 120,
+        spread: 80,
+        origin: { y: 0.6 }
+      });
+    }
+
+    this.showConfirmationModal(created);
+    this.resetWizard();
+  }
+
+  resetWizard() {
+    this.currentStep = 1;
+    this.state.addOnIds = [];
+    this.state.customerName = '';
+    this.state.customerPhone = '';
+    this.state.customerEmail = '';
+    this.state.vehicleModel = '';
+    this.state.licensePlate = '';
+    this.state.notes = '';
+
+    ['input-name', 'input-phone', 'input-email', 'input-vehicle-model', 'input-license-plate', 'input-notes'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+
+    this.renderAddOns();
+    this.updateCalculation();
+    this.updateStepUI();
+  }
+
+  showConfirmationModal(booking) {
+    const modal = document.getElementById('booking-receipt-modal');
+    if (!modal) return;
+
+    const pkg = window.CarWashData.PACKAGES.find(p => p.id === booking.packageId);
+
+    document.getElementById('receipt-booking-id').textContent = booking.id;
+    document.getElementById('receipt-customer-name').textContent = booking.customerName;
+    document.getElementById('receipt-vehicle-info').textContent = `${booking.vehicleModel} (${booking.licensePlate})`;
+    document.getElementById('receipt-package-name').textContent = pkg?.name || 'Wash Package';
+    document.getElementById('receipt-slot-info').textContent = `${booking.bookingDate} at ${booking.timeSlot}`;
+    document.getElementById('receipt-total-amount').textContent = `$${booking.totalPrice.toFixed(2)}`;
+    document.getElementById('receipt-bay-info').textContent = booking.bayNumber;
+
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+
+    const trackNowBtn = document.getElementById('receipt-track-now-btn');
+    if (trackNowBtn) {
+      trackNowBtn.onclick = () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        window.location.hash = '#tracker';
+        const trackerInput = document.getElementById('tracker-search-input');
+        if (trackerInput) {
+          trackerInput.value = booking.id;
+          window.liveTracker?.search(booking.id);
+        }
+      };
+    }
+  }
+}
+
+window.BookingEngine = BookingEngine;
+
+/**
+ * HydroShine Live Wash Tracker
+ */
+class LiveTracker {
+  constructor() {
+    this.currentTrackedId = null;
+    this.init();
+  }
+
+  init() {
+    this.setupEventListeners();
+    
+    window.carWashStore.subscribe('bookings_updated', () => {
+      if (this.currentTrackedId) {
+        this.search(this.currentTrackedId, false);
+      }
+    });
+
+    const firstActive = window.carWashStore.getAllBookings()[0];
+    if (firstActive) {
+      this.search(firstActive.id, false);
+      const input = document.getElementById('tracker-search-input');
+      if (input) input.value = firstActive.id;
+    }
+  }
+
+  setupEventListeners() {
+    const searchBtn = document.getElementById('tracker-search-btn');
+    const searchInput = document.getElementById('tracker-search-input');
+
+    if (searchBtn && searchInput) {
+      searchBtn.addEventListener('click', () => {
+        this.search(searchInput.value.trim());
+      });
+
+      searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          this.search(searchInput.value.trim());
+        }
+      });
+    }
+
+    document.querySelectorAll('.demo-track-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        const query = pill.getAttribute('data-query');
+        if (query) {
+          if (searchInput) searchInput.value = query;
+          this.search(query);
+        }
+      });
+    });
+  }
+
+  search(query, showFeedback = true) {
+    if (!query) {
+      if (showFeedback) window.showToast?.('Please enter a Booking ID or License Plate', 'warning');
+      return;
+    }
+
+    const booking = window.carWashStore.getBookingByIdOrPlate(query);
+    const resultContainer = document.getElementById('tracker-result-card');
+    const emptyState = document.getElementById('tracker-empty-state');
+
+    if (!booking) {
+      if (resultContainer) resultContainer.classList.add('hidden');
+      if (emptyState) {
+        emptyState.classList.remove('hidden');
+        emptyState.innerHTML = `
+          <div class="p-8 text-center bg-slate-900/60 border border-slate-800 rounded-3xl">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-2xl">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h4 class="text-lg font-bold text-white mb-1">No Active Booking Found</h4>
+            <p class="text-sm text-slate-400 max-w-md mx-auto">We couldn't locate any vehicle with reference "<strong class="text-amber-400">${query}</strong>". Please verify your booking ID or license plate.</p>
+          </div>
+        `;
+      }
+      return;
+    }
+
+    this.currentTrackedId = booking.id;
+    if (emptyState) emptyState.classList.add('hidden');
+    if (resultContainer) {
+      resultContainer.classList.remove('hidden');
+      this.renderTrackerDetails(booking);
+    }
+  }
+
+  renderTrackerDetails(booking) {
+    const pkg = window.CarWashData.PACKAGES.find(p => p.id === booking.packageId);
+    const statusMeta = window.CarWashData.WASH_STATUSES[booking.status.toUpperCase()] || window.CarWashData.WASH_STATUSES.QUEUED;
+
+    const stages = [
+      { key: 'queued', label: 'Queued & Inspection', icon: 'fa-clipboard-check', desc: 'Pre-wash check & bay assignment' },
+      { key: 'washing', label: 'Foam Bath & Rinse', icon: 'fa-soap', desc: 'High-pressure wash & wheel scrub' },
+      { key: 'detailing', label: 'Interior & Detailing', icon: 'fa-brush', desc: 'Deep vacuum & surface treat' },
+      { key: 'drying', label: 'Ceramic Seal & Buff', icon: 'fa-wind', desc: 'Hydrophobic gloss & streak-free dry' },
+      { key: 'ready', label: 'Ready for Pickup', icon: 'fa-circle-check', desc: 'Vehicle in inspection lounge' }
+    ];
+
+    const currentStageIndex = stages.findIndex(s => s.key === booking.status);
+    const isCompleted = booking.status === 'completed';
+
+    let progressPercent = 10;
+    if (isCompleted) {
+      progressPercent = 100;
+    } else if (currentStageIndex >= 0) {
+      progressPercent = Math.round(((currentStageIndex + 1) / stages.length) * 100);
+    }
+
+    const container = document.getElementById('tracker-result-card');
+    if (!container) return;
+
+    container.innerHTML = `
+      <div class="bg-gradient-to-b from-slate-900/90 to-slate-950/90 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden">
+        <div class="absolute -top-24 -right-24 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-800/80 relative z-10">
+          <div>
+            <div class="flex items-center gap-3 mb-1">
+              <span class="text-xs font-mono font-bold px-3 py-1 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                ${booking.id}
+              </span>
+              <span class="text-xs font-semibold px-3 py-1 rounded-lg border ${statusMeta.color} flex items-center gap-1.5">
+                <i class="fa-solid ${statusMeta.icon}"></i>
+                ${statusMeta.label}
+              </span>
+            </div>
+            <h3 class="text-2xl font-black text-white">${booking.vehicleModel}</h3>
+            <p class="text-xs text-slate-400 flex items-center gap-2 mt-0.5">
+              <span>Plate: <strong class="text-slate-200 tracking-wider">${booking.licensePlate}</strong></span>
+              <span>•</span>
+              <span>Owner: <strong class="text-slate-200">${booking.customerName}</strong></span>
+            </p>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="bg-slate-800/70 border border-slate-700/60 rounded-2xl px-4 py-2.5 text-right">
+              <span class="text-[11px] text-slate-400 block">Assigned Bay</span>
+              <span class="text-sm font-bold text-cyan-400 flex items-center justify-end gap-1.5">
+                <i class="fa-solid fa-warehouse text-xs"></i>
+                ${booking.bayNumber || 'Bay 1'}
+              </span>
+            </div>
+            <div class="bg-slate-800/70 border border-slate-700/60 rounded-2xl px-4 py-2.5 text-right">
+              <span class="text-[11px] text-slate-400 block">Lead Specialist</span>
+              <span class="text-sm font-bold text-white flex items-center justify-end gap-1.5">
+                <i class="fa-solid fa-user-gear text-xs text-cyan-400"></i>
+                ${booking.technician || 'Staff'}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="py-8 relative z-10">
+          <div class="flex items-center justify-between mb-3 text-xs">
+            <span class="font-bold text-white flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
+              Live Service Stage Progress
+            </span>
+            <span class="font-mono text-cyan-400 font-bold">${progressPercent}% Completed</span>
+          </div>
+
+          <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden mb-8 p-0.5">
+            <div class="h-full bg-gradient-to-r from-cyan-500 via-teal-400 to-emerald-400 rounded-full transition-all duration-700 ease-out" style="width: ${progressPercent}%;"></div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+            ${stages.map((st, idx) => {
+              const isPast = currentStageIndex > idx || isCompleted;
+              const isCurrent = currentStageIndex === idx && !isCompleted;
+              
+              let nodeStyle = 'border-slate-800 bg-slate-900/60 text-slate-500';
+              let iconStyle = 'bg-slate-800 text-slate-400';
+              
+              if (isPast) {
+                nodeStyle = 'border-emerald-500/40 bg-emerald-950/20 text-emerald-400';
+                iconStyle = 'bg-emerald-500 text-slate-950 font-bold';
+              } else if (isCurrent) {
+                nodeStyle = 'border-cyan-400 bg-cyan-950/40 text-cyan-300 ring-2 ring-cyan-500/30 shadow-lg shadow-cyan-500/20';
+                iconStyle = 'bg-cyan-400 text-slate-950 font-bold animate-bounce';
+              }
+
+              return `
+                <div class="p-3.5 rounded-2xl border transition-all ${nodeStyle}">
+                  <div class="flex items-center gap-3 md:flex-col md:text-center md:gap-2">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${iconStyle}">
+                      <i class="fa-solid ${isPast ? 'fa-check' : st.icon} text-sm"></i>
+                    </div>
+                    <div>
+                      <h5 class="text-xs font-bold leading-tight ${isCurrent ? 'text-white' : ''}">${st.label}</h5>
+                      <p class="text-[10px] text-slate-400 mt-0.5 leading-snug hidden sm:block">${st.desc}</p>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 border-t border-slate-800/80 text-xs">
+          <div class="p-3.5 rounded-2xl bg-slate-900/40 border border-slate-800/60">
+            <span class="text-slate-400 block text-[11px] mb-1">Package Selected</span>
+            <span class="font-bold text-white text-sm">${pkg?.name || 'Wash Package'}</span>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-slate-900/40 border border-slate-800/60">
+            <span class="text-slate-400 block text-[11px] mb-1">Total Bill</span>
+            <span class="font-bold text-cyan-400 text-sm">$${booking.totalPrice?.toFixed(2)}</span>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-slate-900/40 border border-slate-800/60">
+            <span class="text-slate-400 block text-[11px] mb-1">Scheduled Time</span>
+            <span class="font-bold text-white text-sm">${booking.bookingDate} @ ${booking.timeSlot}</span>
+          </div>
+        </div>
+
+        ${booking.notes ? `
+          <div class="mt-4 p-3.5 rounded-2xl bg-slate-900/40 border border-slate-800/60 text-xs text-slate-300 flex items-start gap-2.5">
+            <i class="fa-regular fa-message text-cyan-400 mt-0.5"></i>
+            <div>
+              <span class="font-bold text-slate-400 block text-[10px] uppercase tracking-wider">Customer Instructions</span>
+              <p class="text-slate-300 italic">${booking.notes}</p>
+            </div>
+          </div>
+        ` : ''}
+
+        <div class="mt-6 flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-800">
+          <button onclick="window.printReceipt('${booking.id}')" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 transition flex items-center gap-2">
+            <i class="fa-solid fa-print"></i>
+            Print Service Invoice
+          </button>
+
+          <a href="tel:+15551234567" class="px-4 py-2 rounded-xl text-xs font-semibold bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/20 transition flex items-center gap-2">
+            <i class="fa-solid fa-phone"></i>
+            Call Bay Advisor (+1 555-CAR-WASH)
+          </a>
+        </div>
+      </div>
+    `;
+  }
+}
+
+window.LiveTracker = LiveTracker;
+
+/**
+ * HydroShine Admin & Bay Operations Dashboard
+ */
+class AdminDashboard {
+  constructor() {
+    this.currentFilter = 'all';
+    this.searchQuery = '';
+    this.revenueChart = null;
+    this.volumeChart = null;
+    this.init();
+  }
+
+  init() {
+    this.setupEventListeners();
+    this.renderKPIs();
+    this.renderQueueTable();
+    this.initCharts();
+
+    window.carWashStore.subscribe('bookings_updated', () => {
+      this.renderKPIs();
+      this.renderQueueTable();
+      this.updateCharts();
+    });
+  }
+
+  setupEventListeners() {
+    const searchInput = document.getElementById('admin-search-input');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        this.searchQuery = e.target.value.toLowerCase();
+        this.renderQueueTable();
+      });
+    }
+
+    document.querySelectorAll('.admin-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.admin-filter-btn').forEach(b => {
+          b.classList.remove('bg-cyan-500', 'text-slate-950', 'font-bold');
+          b.classList.add('bg-slate-800', 'text-slate-300');
+        });
+        btn.classList.add('bg-cyan-500', 'text-slate-950', 'font-bold');
+        btn.classList.remove('bg-slate-800', 'text-slate-300');
+
+        this.currentFilter = btn.getAttribute('data-status') || 'all';
+        this.renderQueueTable();
+      });
+    });
+
+    document.getElementById('admin-reset-demo-btn')?.addEventListener('click', () => {
+      if (confirm('Reset queue and demo bookings back to initial defaults?')) {
+        window.carWashStore.resetToDefaults();
+        window.showToast?.('System reset to demo data', 'info');
+      }
+    });
+
+    document.getElementById('admin-export-csv-btn')?.addEventListener('click', () => {
+      this.exportCSV();
+    });
+
+    const openWalkinBtn = document.getElementById('admin-open-walkin-btn');
+    const closeWalkinBtn = document.getElementById('admin-close-walkin-btn');
+    const walkinModal = document.getElementById('admin-walkin-modal');
+    const walkinForm = document.getElementById('admin-walkin-form');
+
+    if (openWalkinBtn && walkinModal) {
+      openWalkinBtn.addEventListener('click', () => {
+        walkinModal.classList.remove('hidden');
+        walkinModal.classList.add('flex');
+      });
+    }
+
+    if (closeWalkinBtn && walkinModal) {
+      closeWalkinBtn.addEventListener('click', () => {
+        walkinModal.classList.add('hidden');
+        walkinModal.classList.remove('flex');
+      });
+    }
+
+    if (walkinForm) {
+      walkinForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        this.handleWalkinSubmit();
+      });
+    }
+  }
+
+  handleWalkinSubmit() {
+    const name = document.getElementById('walkin-name').value.trim();
+    const plate = document.getElementById('walkin-plate').value.trim().toUpperCase();
+    const model = document.getElementById('walkin-model').value.trim() || 'Drive-in Vehicle';
+    const pkgId = document.getElementById('walkin-package').value;
+    const vehicleType = document.getElementById('walkin-vehicle-type').value;
+
+    if (!name || !plate) {
+      window.showToast?.('Please fill name and license plate', 'warning');
+      return;
+    }
+
+    const pkg = window.CarWashData.PACKAGES.find(p => p.id === pkgId);
+    const vehicle = window.CarWashData.VEHICLE_TYPES.find(v => v.id === vehicleType);
+    const mult = vehicle ? vehicle.multiplier : 1.0;
+    const basePrice = (pkg ? pkg.basePrice : 29.99) * mult;
+    const total = basePrice * 1.0825;
+
+    const newBooking = window.carWashStore.createBooking({
+      customerName: name,
+      customerPhone: '+1 (Walk-In)',
+      customerEmail: 'walkin@hydroshine.internal',
+      vehicleType: vehicleType,
+      vehicleModel: model,
+      licensePlate: plate,
+      packageId: pkgId,
+      addOnIds: [],
+      bookingDate: new Date().toISOString().split('T')[0],
+      timeSlot: 'Walk-In Now',
+      bayNumber: 'Bay 1',
+      technician: 'Sam Chen',
+      totalPrice: Number(total.toFixed(2)),
+      status: 'washing',
+      notes: 'Quick drive-up customer'
+    });
+
+    const modal = document.getElementById('admin-walkin-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    document.getElementById('admin-walkin-form')?.reset();
+    window.showToast?.(`Walk-in added directly to Bay 1 (${newBooking.id})`, 'success');
+  }
+
+  renderKPIs() {
+    const bookings = window.carWashStore.getAllBookings();
+
+    const totalCount = bookings.length;
+    const activeInBay = bookings.filter(b => ['washing', 'detailing', 'drying'].includes(b.status)).length;
+    const readyCount = bookings.filter(b => b.status === 'ready').length;
+    const totalRevenue = bookings.reduce((sum, b) => sum + (b.totalPrice || 0), 0);
+
+    const updateEl = (id, text) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    };
+
+    updateEl('kpi-total-orders', totalCount);
+    updateEl('kpi-active-bays', `${activeInBay} Active`);
+    updateEl('kpi-ready-pickup', readyCount);
+    updateEl('kpi-revenue', `$${totalRevenue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
+  }
+
+  renderQueueTable() {
+    const tbody = document.getElementById('admin-queue-tbody');
+    if (!tbody) return;
+
+    let bookings = window.carWashStore.getAllBookings();
+
+    if (this.currentFilter !== 'all') {
+      bookings = bookings.filter(b => b.status === this.currentFilter);
+    }
+
+    if (this.searchQuery) {
+      bookings = bookings.filter(b => 
+        (b.id || '').toLowerCase().includes(this.searchQuery) ||
+        (b.customerName || '').toLowerCase().includes(this.searchQuery) ||
+        (b.licensePlate || '').toLowerCase().includes(this.searchQuery) ||
+        (b.vehicleModel || '').toLowerCase().includes(this.searchQuery)
+      );
+    }
+
+    if (bookings.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7" class="py-12 text-center text-slate-500 text-sm">
+            <i class="fa-solid fa-folder-open text-2xl block mb-2 opacity-50"></i>
+            No bookings found matching current filters.
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    tbody.innerHTML = bookings.map(b => {
+      const pkg = window.CarWashData.PACKAGES.find(p => p.id === b.packageId);
+
+      return `
+        <tr class="border-b border-slate-800/80 hover:bg-slate-800/30 transition text-xs">
+          <td class="py-4 px-4 font-mono font-bold text-cyan-400">
+            ${b.id}
+            <span class="block text-[10px] text-slate-500 font-sans font-normal mt-0.5">${b.timeSlot}</span>
+          </td>
+
+          <td class="py-4 px-4">
+            <span class="font-bold text-white block">${b.customerName}</span>
+            <span class="text-slate-400 text-[11px]">${b.customerPhone}</span>
+          </td>
+
+          <td class="py-4 px-4">
+            <span class="text-white font-medium block truncate max-w-[180px]">${b.vehicleModel}</span>
+            <span class="inline-block mt-0.5 px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-mono text-[10px] tracking-wider border border-slate-700">
+              ${b.licensePlate}
+            </span>
+          </td>
+
+          <td class="py-4 px-4">
+            <span class="font-semibold text-slate-200 block">${pkg?.name || 'Wash Package'}</span>
+            <span class="font-mono text-cyan-400 font-bold">$${b.totalPrice?.toFixed(2)}</span>
+          </td>
+
+          <td class="py-4 px-4">
+            <span class="text-slate-300 block font-medium">${b.bayNumber || 'Queue'}</span>
+            <span class="text-[11px] text-slate-500">${b.technician || 'Staff'}</span>
+          </td>
+
+          <td class="py-4 px-4">
+            <select class="status-selector bg-slate-900 border border-slate-700 text-xs rounded-xl px-2.5 py-1.5 font-semibold text-slate-200 focus:outline-none focus:border-cyan-500 transition" data-id="${b.id}">
+              <option value="queued" ${b.status === 'queued' ? 'selected' : ''}>⏳ In Queue</option>
+              <option value="washing" ${b.status === 'washing' ? 'selected' : ''}>🧼 Washing Bay</option>
+              <option value="detailing" ${b.status === 'detailing' ? 'selected' : ''}>🖌️ Detailing</option>
+              <option value="drying" ${b.status === 'drying' ? 'selected' : ''}>💨 Ceramic & Dry</option>
+              <option value="ready" ${b.status === 'ready' ? 'selected' : ''}>✅ Ready for Pickup</option>
+              <option value="completed" ${b.status === 'completed' ? 'selected' : ''}>🏁 Delivered</option>
+            </select>
+          </td>
+
+          <td class="py-4 px-4 text-right space-x-1.5 whitespace-nowrap">
+            <button onclick="window.printReceipt('${b.id}')" title="Print Invoice" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition">
+              <i class="fa-solid fa-print"></i>
+            </button>
+            <button onclick="window.adminDashboard.deleteRecord('${b.id}')" title="Remove" class="p-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 transition">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+
+    tbody.querySelectorAll('.status-selector').forEach(sel => {
+      sel.addEventListener('change', (e) => {
+        const id = sel.getAttribute('data-id');
+        const newStatus = e.target.value;
+        window.carWashStore.updateStatus(id, newStatus);
+        window.showToast?.(`Booking ${id} status updated to: ${newStatus}`, 'success');
+      });
+    });
+  }
+
+  deleteRecord(id) {
+    if (confirm(`Are you sure you want to delete booking ${id}?`)) {
+      window.carWashStore.deleteBooking(id);
+      window.showToast?.(`Deleted booking ${id}`, 'info');
+    }
+  }
+
+  initCharts() {
+    if (typeof Chart === 'undefined') return;
+
+    const ctxRev = document.getElementById('chart-revenue');
+    const ctxVol = document.getElementById('chart-volume');
+
+    if (ctxRev) {
+      this.revenueChart = new Chart(ctxRev, {
+        type: 'doughnut',
+        data: this.getRevenueChartData(),
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { color: '#94a3b8', font: { size: 11 } }
+            }
+          },
+          cutout: '70%'
+        }
+      });
+    }
+
+    if (ctxVol) {
+      this.volumeChart = new Chart(ctxVol, {
+        type: 'bar',
+        data: this.getVolumeChartData(),
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              ticks: { color: '#94a3b8' },
+              grid: { color: 'rgba(51, 65, 85, 0.3)' }
+            },
+            y: {
+              ticks: { color: '#94a3b8', stepSize: 1 },
+              grid: { color: 'rgba(51, 65, 85, 0.3)' },
+              beginAtZero: true
+            }
+          },
+          plugins: {
+            legend: { display: false }
+          }
+        }
+      });
+    }
+  }
+
+  getRevenueChartData() {
+    const bookings = window.carWashStore.getAllBookings();
+    const pkgRevenue = {};
+
+    window.CarWashData.PACKAGES.forEach(p => { pkgRevenue[p.name] = 0; });
+
+    bookings.forEach(b => {
+      const pkg = window.CarWashData.PACKAGES.find(p => p.id === b.packageId);
+      if (pkg) {
+        pkgRevenue[pkg.name] = (pkgRevenue[pkg.name] || 0) + (b.totalPrice || 0);
+      }
+    });
+
+    return {
+      labels: Object.keys(pkgRevenue),
+      datasets: [{
+        data: Object.values(pkgRevenue),
+        backgroundColor: ['#06b6d4', '#14b8a6', '#f59e0b', '#8b5cf6'],
+        borderWidth: 0
+      }]
+    };
+  }
+
+  getVolumeChartData() {
+    const bookings = window.carWashStore.getAllBookings();
+    const statusCounts = {
+      'Queued': 0,
+      'Washing': 0,
+      'Detailing': 0,
+      'Drying': 0,
+      'Ready': 0,
+      'Delivered': 0
+    };
+
+    bookings.forEach(b => {
+      if (b.status === 'queued') statusCounts['Queued']++;
+      else if (b.status === 'washing') statusCounts['Washing']++;
+      else if (b.status === 'detailing') statusCounts['Detailing']++;
+      else if (b.status === 'drying') statusCounts['Drying']++;
+      else if (b.status === 'ready') statusCounts['Ready']++;
+      else if (b.status === 'completed') statusCounts['Delivered']++;
+    });
+
+    return {
+      labels: Object.keys(statusCounts),
+      datasets: [{
+        data: Object.values(statusCounts),
+        backgroundColor: '#06b6d4',
+        borderRadius: 8
+      }]
+    };
+  }
+
+  updateCharts() {
+    if (this.revenueChart) {
+      this.revenueChart.data = this.getRevenueChartData();
+      this.revenueChart.update();
+    }
+    if (this.volumeChart) {
+      this.volumeChart.data = this.getVolumeChartData();
+      this.volumeChart.update();
+    }
+  }
+
+  exportCSV() {
+    const bookings = window.carWashStore.getAllBookings();
+    if (!bookings.length) {
+      window.showToast?.('No records to export', 'warning');
+      return;
+    }
+
+    const headers = ['Booking ID', 'Date', 'Time Slot', 'Customer', 'Phone', 'Vehicle', 'Plate', 'Package', 'Bay', 'Tech', 'Total USD', 'Status'];
+    const rows = bookings.map(b => {
+      const pkg = window.CarWashData.PACKAGES.find(p => p.id === b.packageId);
+      return [
+        b.id,
+        b.bookingDate,
+        b.timeSlot,
+        `"${b.customerName}"`,
+        `"${b.customerPhone}"`,
+        `"${b.vehicleModel}"`,
+        `"${b.licensePlate}"`,
+        `"${pkg ? pkg.name : ''}"`,
+        `"${b.bayNumber}"`,
+        `"${b.technician}"`,
+        b.totalPrice,
+        b.status
+      ].join(',');
+    });
+
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `HydroShine_Bookings_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.showToast?.('Exported bookings to CSV file', 'success');
+  }
+}
+
+window.AdminDashboard = AdminDashboard;
+
+/**
+ * HydroShine Main Application Orchestrator
+ */
+document.addEventListener('DOMContentLoaded', () => {
+  window.showToast = (message, type = 'info') => {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    const colors = {
+      success: 'border-emerald-500/50 bg-slate-900/95 text-emerald-400',
+      error: 'border-rose-500/50 bg-slate-900/95 text-rose-400',
+      warning: 'border-amber-500/50 bg-slate-900/95 text-amber-400',
+      info: 'border-cyan-500/50 bg-slate-900/95 text-cyan-400'
+    };
+
+    const icons = {
+      success: 'fa-circle-check',
+      error: 'fa-circle-exclamation',
+      warning: 'fa-triangle-exclamation',
+      info: 'fa-circle-info'
+    };
+
+    toast.className = `flex items-center gap-3 px-4 py-3 rounded-2xl border shadow-xl backdrop-blur-md transition-all duration-300 transform translate-y-2 opacity-0 text-xs font-semibold ${colors[type] || colors.info}`;
+    toast.innerHTML = `
+      <i class="fa-solid ${icons[type] || icons.info} text-base shrink-0"></i>
+      <span class="text-white">${message}</span>
+    `;
+
+    container.appendChild(toast);
+
+    requestAnimationFrame(() => {
+      toast.classList.remove('translate-y-2', 'opacity-0');
+    });
+
+    setTimeout(() => {
+      toast.classList.add('opacity-0', 'translate-y-2');
+      setTimeout(() => toast.remove(), 300);
+    }, 3800);
+  };
+
+  window.bookingEngine = new window.BookingEngine();
+  window.liveTracker = new window.LiveTracker();
+  window.adminDashboard = new window.AdminDashboard();
+
+  renderTestimonials();
+  setupNavigation();
+  setupPrintHandler();
+  setupContactForm();
+});
+
+function renderTestimonials() {
+  const container = document.getElementById('testimonials-container');
+  if (!container) return;
+
+  container.innerHTML = window.CarWashData.TESTIMONIALS.map(t => `
+    <div class="p-6 rounded-3xl bg-slate-900/60 border border-slate-800/80 hover:border-slate-700 transition flex flex-col justify-between">
+      <div>
+        <div class="flex items-center gap-1 text-amber-400 text-xs mb-3">
+          ${Array(t.rating).fill('<i class="fa-solid fa-star"></i>').join('')}
+        </div>
+        <p class="text-slate-300 text-sm leading-relaxed mb-6 italic">"${t.comment}"</p>
+      </div>
+
+      <div class="flex items-center gap-3 pt-4 border-t border-slate-800/60">
+        <img src="${t.avatar}" alt="${t.name}" class="w-11 h-11 rounded-full object-cover border border-cyan-500/30">
+        <div>
+          <h5 class="text-sm font-bold text-white">${t.name}</h5>
+          <span class="text-xs text-cyan-400 block">${t.role}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function setupNavigation() {
+  const navCustomer = document.getElementById('view-customer');
+  const navAdmin = document.getElementById('view-admin');
+  const toggleAdminBtns = document.querySelectorAll('.toggle-admin-btn');
+  const toggleCustomerBtns = document.querySelectorAll('.toggle-customer-btn');
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (mobileMenuBtn && mobileMenu) {
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+  }
+
+  toggleAdminBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (navCustomer && navAdmin) {
+        navCustomer.classList.add('hidden');
+        navAdmin.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.showToast('Switched to Staff Operator Portal', 'info');
+      }
+    });
+  });
+
+  toggleCustomerBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (navCustomer && navAdmin) {
+        navAdmin.classList.add('hidden');
+        navCustomer.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.showToast('Switched to Customer Experience Portal', 'info');
+      }
+    });
+  });
+}
+
+function setupPrintHandler() {
+  window.printReceipt = (bookingId) => {
+    const booking = window.carWashStore.getAllBookings().find(b => b.id === bookingId);
+    if (!booking) {
+      window.showToast?.('Booking not found', 'error');
+      return;
+    }
+
+    const pkg = window.CarWashData.PACKAGES.find(p => p.id === booking.packageId);
+    const addons = (booking.addOnIds || []).map(id => {
+      return window.CarWashData.ADDONS.find(a => a.id === id);
+    }).filter(Boolean);
+
+    const printWindow = window.open('', '_blank', 'width=750,height=800');
+    if (!printWindow) {
+      window.showToast?.('Pop-up blocked. Please allow popups to print receipt.', 'warning');
+      return;
+    }
+
+    const receiptHtml = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Invoice - ${booking.id} - HydroShine Auto Spa</title>
+        <style>
+          body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 40px; color: #1e293b; line-height: 1.5; }
+          .header { border-bottom: 2px solid #0f172a; padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-start; }
+          .logo { font-size: 24px; font-weight: 900; color: #0284c7; letter-spacing: -0.5px; }
+          .meta-box { margin-bottom: 30px; background: #f8fafc; padding: 15px; border-radius: 8px; font-size: 14px; }
+          table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+          th { text-align: left; padding: 10px; border-bottom: 2px solid #e2e8f0; font-size: 13px; text-transform: uppercase; color: #64748b; }
+          td { padding: 12px 10px; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+          .total-row { font-size: 18px; font-weight: bold; border-top: 2px solid #0f172a; }
+          .footer { margin-top: 40px; text-align: center; font-size: 12px; color: #64748b; border-top: 1px dashed #cbd5e1; padding-top: 20px; }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <div>
+            <div class="logo">HYDROSHINE AUTO SPA</div>
+            <div style="font-size: 13px; color: #64748b;">Eco-Friendly Touchless Car Detailing</div>
+            <div style="font-size: 12px; color: #64748b;">404 Metro Boulevard, Suite 100 • (555) CAR-WASH</div>
+          </div>
+          <div style="text-align: right;">
+            <h2 style="margin: 0; font-size: 20px; color: #0f172a;">RECEIPT / INVOICE</h2>
+            <div style="font-size: 14px; font-weight: bold; color: #0284c7; margin-top: 4px;">#${booking.id}</div>
+            <div style="font-size: 12px; color: #64748b;">Issued: ${new Date().toLocaleDateString()}</div>
+          </div>
+        </div>
+
+        <div class="meta-box">
+          <table style="margin: 0;">
+            <tr>
+              <td><strong>Customer:</strong> ${booking.customerName}</td>
+              <td><strong>Vehicle:</strong> ${booking.vehicleModel}</td>
+            </tr>
+            <tr>
+              <td><strong>Phone:</strong> ${booking.customerPhone}</td>
+              <td><strong>License Plate:</strong> ${booking.licensePlate}</td>
+            </tr>
+            <tr>
+              <td><strong>Scheduled:</strong> ${booking.bookingDate} at ${booking.timeSlot}</td>
+              <td><strong>Bay / Tech:</strong> ${booking.bayNumber} (${booking.technician})</td>
+            </tr>
+          </table>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Service Item</th>
+              <th>Category</th>
+              <th style="text-align: right;">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>${pkg?.name || 'Wash Package'}</strong></td>
+              <td>Core Package (${booking.vehicleType.toUpperCase()})</td>
+              <td style="text-align: right;">$${(booking.totalPrice * 0.85).toFixed(2)}</td>
+            </tr>
+            ${addons.map(a => `
+              <tr>
+                <td>${a.name}</td>
+                <td>Add-on Service</td>
+                <td style="text-align: right;">$${a.price.toFixed(2)}</td>
+              </tr>
+            `).join('')}
+            <tr class="total-row">
+              <td colspan="2" style="text-align: right; padding-top: 16px;">Total Paid / Due:</td>
+              <td style="text-align: right; padding-top: 16px; color: #0284c7;">$${booking.totalPrice.toFixed(2)}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="footer">
+          <p>Thank you for choosing HydroShine Auto Spa! Your vehicle is protected with biodegradable ceramic formula.</p>
+          <p>Track your wash live at <strong>www.hydroshine-spa.com/track</strong></p>
+        </div>
+
+        <script>
+          window.onload = function() {
+            window.print();
+          };
+        </script>
+      </body>
+      </html>
+    `;
+
+    printWindow.document.write(receiptHtml);
+    printWindow.document.close();
+  };
+
+  document.getElementById('close-receipt-modal-btn')?.addEventListener('click', () => {
+    const modal = document.getElementById('booking-receipt-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+  });
+}
+
+function setupContactForm() {
+  const form = document.getElementById('contact-form');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      window.showToast('Thank you! Your inquiry has been sent to our bay concierge.', 'success');
+      form.reset();
+    });
+  }
+}
+  </script>
+</body>
+</html>
